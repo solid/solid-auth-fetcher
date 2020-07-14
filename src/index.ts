@@ -26,6 +26,8 @@ import AuthFetcher from "./AuthFetcher";
 import getAuthFetcherWithDependencies from "./dependencies";
 import IStorage from "./localStorage/IStorage";
 
+export { createDPopHeader } from "./createDpopHeader";
+
 export interface ICustomAuthFetcherOptions {
   storage?: IStorage;
   doNotAutoHandleRedirect?: boolean;
