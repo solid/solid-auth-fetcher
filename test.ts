@@ -23,7 +23,9 @@
 
 import "reflect-metadata";
 import IsomorphicJoseUtility from "./src/jose/IsomorphicJoseUtility";
-import IssuerConfigFetcher from "./src/login/oidc/IssuerConfigFetcher";
+import IssuerConfigFetcher, {
+  IIssuerConfigFetcher
+} from "./src/login/oidc/IssuerConfigFetcher";
 import TokenRequester from "./src/login/oidc/TokenRequester";
 import { IStorageUtility } from "./src/localStorage/StorageUtility";
 import fetch from "isomorphic-fetch";
@@ -33,7 +35,10 @@ import DpopHeaderCreator, {
 } from "./src/dpop/DpopHeaderCreator";
 import UuidGenerator from "./src/util/UuidGenerator";
 import { IDpopClientKeyManager } from "./src/dpop/DpopClientKeyManager";
-import { JSONWebKey } from "jose";
+import { JSONWebKey, JWK } from "jose";
+import ClientRegistrar from "./src/login/oidc/ClientRegistrar";
+import IJoseUtility from "./src/jose/IJoseUtility";
+import { IFetcher } from "./src/util/Fetcher";
 
 const method = "get";
 const url = "https://michielbdejong.solid.community:8443/";
@@ -41,51 +46,25 @@ const issuer = "https://solid.community:8443";
 const clientId = "coolApp";
 const clientSecret = "user:pass";
 
-function getDPopHeaderCreator(params: { jwk: JSONWebKey }): IDpopHeaderCreator {
-  return new DpopHeaderCreator(
-    new IsomorphicJoseUtility(),
-    ({
-      getClientKey: (): JSONWebKey => {
-        return params.jwk;
-      }
-    } as unknown) as IDpopClientKeyManager,
-    new UuidGenerator()
-  );
-}
+let joseUtility: IJoseUtility;
+let storageUtility: IStorageUtility;
+let fetcher: IFetcher;
+let jwk: any;
+let dpopHeaderCreator: IDpopHeaderCreator;
+let issuerConfigFetcher: IIssuerConfigFetcher;
 
-async function createFetchHeaders(params: {
-  dpopHeaderCreator: IDpopHeaderCreator;
-  authToken: string;
-  url: string;
-  method: string;
-}): Promise<{ authorization: string; dpop: string }> {
-  const dpopHeader = await params.dpopHeaderCreator.createHeaderToken(
-    new URL(params.url),
-    params.method
-  );
-  return {
-    authorization: `DPop ${params.authToken}`,
-    dpop: dpopHeader
-  };
-}
-
-async function requestToken(params: {
-  dpopHeaderCreator: IDpopHeaderCreator;
-  issuer: string;
-  clientId: string;
-  clientSecret: string;
-}): Promise<string> {
-  const storageUtility = ({
+async function bootstrap(): Promise<void> {
+  storageUtility = ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getForUser: (userId: string, key: string, dummy?: boolean): string => {
       if (key === "issuer") {
-        return params.issuer;
+        return issuer;
       }
       if (key === "clientId") {
-        return params.clientId;
+        return clientId;
       }
       if (key === "clientSecret") {
-        return params.clientSecret;
+        return clientSecret;
       }
       return "";
     },
@@ -98,17 +77,54 @@ async function requestToken(params: {
     }
   } as unknown) as IStorageUtility;
 
-  const fetcher = {
+  fetcher = {
     fetch: (url: URL, options: any): any => {
       console.log("fetching", url.toString());
       return fetch(url.toString(), options);
     }
   };
+  issuerConfigFetcher = new IssuerConfigFetcher(fetcher, storageUtility);
+  joseUtility = new IsomorphicJoseUtility();
+  jwk = await joseUtility.generateJWK("RSA", 2048, {
+    alg: "RSA",
+    use: "sig"
+  });
+  dpopHeaderCreator = new DpopHeaderCreator(
+    new IsomorphicJoseUtility(),
+    ({
+      getClientKey: (): JSONWebKey => {
+        return jwk;
+      }
+    } as unknown) as IDpopClientKeyManager,
+    new UuidGenerator()
+  );
+}
+
+async function createFetchHeaders(params: {
+  authToken: string;
+  url: string;
+  method: string;
+}): Promise<{ authorization: string; dpop: string }> {
+  const dpopHeader = await dpopHeaderCreator.createHeaderToken(
+    new URL(params.url),
+    params.method
+  );
+  return {
+    authorization: `DPop ${params.authToken}`,
+    dpop: dpopHeader
+  };
+}
+
+async function requestToken(params: {
+  issuer: string;
+  clientId: string;
+  clientSecret: string;
+}): Promise<string> {
   const requester = new TokenRequester(
     storageUtility,
-    new IssuerConfigFetcher(fetcher, storageUtility),
+    issuerConfigFetcher,
     fetcher,
-    params.dpopHeaderCreator,
+    dpopHeaderCreator,
     new IsomorphicJoseUtility()
   );
   await requester.request("", {
@@ -120,22 +136,22 @@ async function requestToken(params: {
   return "";
 }
 
+async function registerClient(): Promise<void> {
+  const clientRegistrar = new ClientRegistrar(fetcher);
+  // const issuerConfig = issuerConfigFetcher.fetchConfig();
+  // clientRegistrar.getClient({}, issuerConfig);
+}
+
 async function test(): Promise<void> {
   try {
-    const joseUtility = new IsomorphicJoseUtility();
-    const jwk = await joseUtility.generateJWK("RSA", 2048, {
-      alg: "RSA",
-      use: "sig"
-    });
-    const dpopHeaderCreator = getDPopHeaderCreator({ jwk });
+    await bootstrap();
+    await registerClient();
     const authToken = await requestToken({
-      dpopHeaderCreator,
       issuer,
       clientId,
       clientSecret
     });
     const headers = await createFetchHeaders({
-      dpopHeaderCreator,
       authToken,
       url,
       method
