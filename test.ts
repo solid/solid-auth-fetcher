@@ -47,8 +47,8 @@ import ILoginOptions from "./src/login/ILoginOptions";
 import IClient from "./src/login/oidc/IClient";
 
 const method = "get";
-const url = "https://michielbdejong.solid.community:8443/";
-const issuer = "https://solid.community:8443";
+const url = "https://localhost:8443/";
+const issuer = "https://localhost:8443";
 
 let joseUtility: IJoseUtility;
 let storage: IStorage;
