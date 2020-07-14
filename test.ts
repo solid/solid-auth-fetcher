@@ -1,14 +1,18 @@
 /* eslint-disable license-header/header */
 import { createDPopHeader } from "./src";
-import NodeStorage from "./src/localStorage/NodeStorage";
+import IsomorphicJoseUtility from "./src/jose/IsomorphicJoseUtility";
 
-const storage = new NodeStorage();
 const audience = "https://example.app";
 const method = "get";
 
-async function test() {
+async function test(): Promise<void> {
   try {
-    const result = await createDPopHeader({ storage, audience, method });
+    const joseUtility = new IsomorphicJoseUtility();
+    const jwk = await joseUtility.generateJWK("RSA", 2048, {
+      alg: "RSA",
+      use: "sig"
+    });
+    const result = await createDPopHeader({ jwk, audience, method });
     console.log(result);
   } catch (e) {
     console.error(e.message);
