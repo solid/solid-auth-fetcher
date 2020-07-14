@@ -27,7 +27,9 @@ import IssuerConfigFetcher, {
   IIssuerConfigFetcher
 } from "./src/login/oidc/IssuerConfigFetcher";
 import TokenRequester from "./src/login/oidc/TokenRequester";
-import { IStorageUtility } from "./src/localStorage/StorageUtility";
+import StorageUtility, {
+  IStorageUtility
+} from "./src/localStorage/StorageUtility";
 import fetch from "isomorphic-fetch";
 import URL from "url-parse";
 import DpopHeaderCreator, {
@@ -35,54 +37,33 @@ import DpopHeaderCreator, {
 } from "./src/dpop/DpopHeaderCreator";
 import UuidGenerator from "./src/util/UuidGenerator";
 import { IDpopClientKeyManager } from "./src/dpop/DpopClientKeyManager";
-import { JSONWebKey, JWK } from "jose";
+import { JSONWebKey } from "jose";
 import ClientRegistrar from "./src/login/oidc/ClientRegistrar";
 import IJoseUtility from "./src/jose/IJoseUtility";
-import { IFetcher } from "./src/util/Fetcher";
+import Fetcher, { IFetcher } from "./src/util/Fetcher";
+import NodeStorage from "./src/localStorage/NodeStorage";
+import IStorage from "./src/localStorage/IStorage";
+import ILoginOptions from "./src/login/ILoginOptions";
+import IClient from "./src/login/oidc/IClient";
 
 const method = "get";
 const url = "https://michielbdejong.solid.community:8443/";
 const issuer = "https://solid.community:8443";
-const clientId = "coolApp";
-const clientSecret = "user:pass";
 
 let joseUtility: IJoseUtility;
+let storage: IStorage;
 let storageUtility: IStorageUtility;
 let fetcher: IFetcher;
-let jwk: any;
+let jwk: JSONWebKey;
 let dpopHeaderCreator: IDpopHeaderCreator;
 let issuerConfigFetcher: IIssuerConfigFetcher;
+let loginOptions: ILoginOptions;
 
 async function bootstrap(): Promise<void> {
-  storageUtility = ({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getForUser: (userId: string, key: string, dummy?: boolean): string => {
-      if (key === "issuer") {
-        return issuer;
-      }
-      if (key === "clientId") {
-        return clientId;
-      }
-      if (key === "clientSecret") {
-        return clientSecret;
-      }
-      return "";
-    },
-    safeGet: (key: string, options: any): string | null => {
-      console.log("safeGet", key, options);
-      return null;
-    },
-    set: (key: string, value: string): void => {
-      console.log("set", key, value);
-    }
-  } as unknown) as IStorageUtility;
+  storage = new NodeStorage();
+  storageUtility = new StorageUtility(storage);
 
-  fetcher = {
-    fetch: (url: URL, options: any): any => {
-      console.log("fetching", url.toString());
-      return fetch(url.toString(), options);
-    }
-  };
+  fetcher = new Fetcher();
   issuerConfigFetcher = new IssuerConfigFetcher(fetcher, storageUtility);
   joseUtility = new IsomorphicJoseUtility();
   jwk = await joseUtility.generateJWK("RSA", 2048, {
@@ -98,6 +79,9 @@ async function bootstrap(): Promise<void> {
     } as unknown) as IDpopClientKeyManager,
     new UuidGenerator()
   );
+  loginOptions = {
+    localUserId: "alice"
+  };
 }
 
 async function createFetchHeaders(params: {
@@ -115,11 +99,7 @@ async function createFetchHeaders(params: {
   };
 }
 
-async function requestToken(params: {
-  issuer: string;
-  clientId: string;
-  clientSecret: string;
-}): Promise<string> {
+async function requestToken(): Promise<string> {
   const requester = new TokenRequester(
     storageUtility,
     issuerConfigFetcher,
@@ -127,7 +107,7 @@ async function requestToken(params: {
     dpopHeaderCreator,
     new IsomorphicJoseUtility()
   );
-  await requester.request("", {
+  await requester.request("alice", {
     // eslint-disable-next-line @typescript-eslint/camelcase
     grant_type: "refresh_token",
     // eslint-disable-next-line @typescript-eslint/camelcase
@@ -138,26 +118,37 @@ async function requestToken(params: {
 
 async function registerClient(): Promise<void> {
   const clientRegistrar = new ClientRegistrar(fetcher);
-  // const issuerConfig = issuerConfigFetcher.fetchConfig();
-  // clientRegistrar.getClient({}, issuerConfig);
+  const issuerConfig = await issuerConfigFetcher.fetchConfig(new URL(issuer));
+  const client: IClient = await clientRegistrar.getClient(
+    loginOptions,
+    issuerConfig
+  );
+  console.log(client);
+  await storageUtility.setForUser("alice", "issuer", issuer);
+  if (client.clientId) {
+    await storageUtility.setForUser("alice", "clientId", client.clientId);
+  }
+  if (client.clientSecret) {
+    await storageUtility.setForUser(
+      "alice",
+      "clientSecret",
+      client.clientSecret
+    );
+  }
 }
 
 async function test(): Promise<void> {
   try {
     await bootstrap();
     await registerClient();
-    const authToken = await requestToken({
-      issuer,
-      clientId,
-      clientSecret
-    });
-    const headers = await createFetchHeaders({
-      authToken,
-      url,
-      method
-    });
-    console.log(headers);
-    // const result = await fetch(url, { headers });
+    const authToken = await requestToken();
+    // const headers = await createFetchHeaders({
+    //   authToken,
+    //   url,
+    //   method
+    // });
+    // console.log(headers);
+    // // const result = await fetch(url, { headers });
   } catch (e) {
     console.error(e.message);
   }

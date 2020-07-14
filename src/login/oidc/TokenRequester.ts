@@ -100,10 +100,15 @@ export default class TokenRequester {
       )}`;
     }
 
+    const tokenResponseT = await (
+      await this.fetcher.fetch(issuerConfig.tokenEndpoint, tokenRequestInit)
+    ).text();
+    console.log(tokenResponseT);
+
+    // return
     const tokenResponse = await (
       await this.fetcher.fetch(issuerConfig.tokenEndpoint, tokenRequestInit)
     ).json();
-
     // Check the response
     if (
       !(
