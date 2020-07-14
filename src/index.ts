@@ -26,9 +26,6 @@ import AuthFetcher from "./AuthFetcher";
 import getAuthFetcherWithDependencies from "./dependencies";
 import IStorage from "./localStorage/IStorage";
 
-export { requestToken } from "./requestToken";
-export { createFetchHeaders } from "./createFetchHeaders";
-
 export interface ICustomAuthFetcherOptions {
   storage?: IStorage;
   doNotAutoHandleRedirect?: boolean;
