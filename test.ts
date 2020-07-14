@@ -1,9 +1,13 @@
 /* eslint-disable license-header/header */
-import { createDPopHeader } from "./src";
+import { createFetchHeaders, requestToken } from "./src";
 import IsomorphicJoseUtility from "./src/jose/IsomorphicJoseUtility";
+import { getDPopHeaderCreator } from "./src/createFetchHeaders";
 
-const audience = "https://example.app";
 const method = "get";
+const url = "https://michielbdejong.solid.community:8443/";
+const issuer = "https://solid.community:8443";
+const clientId = "coolApp";
+const clientSecret = "user:pass";
 
 async function test(): Promise<void> {
   try {
@@ -12,8 +16,21 @@ async function test(): Promise<void> {
       alg: "RSA",
       use: "sig"
     });
-    const result = await createDPopHeader({ jwk, audience, method });
-    console.log(result);
+    const dpopHeaderCreator = getDPopHeaderCreator({ jwk });
+    const authToken = await requestToken({
+      dpopHeaderCreator,
+      issuer,
+      clientId,
+      clientSecret
+    });
+    const headers = await createFetchHeaders({
+      dpopHeaderCreator,
+      authToken,
+      url,
+      method
+    });
+    console.log(headers);
+    // const result = await fetch(url, { headers });
   } catch (e) {
     console.error(e.message);
   }

@@ -52,11 +52,12 @@ export default class TokenRequester {
       this.storageUtility.getForUser(localUserId, "clientId", true),
       this.storageUtility.getForUser(localUserId, "clientSecret")
     ]);
-
+    console.log("1");
     // Get the issuer config to find the token url
     const issuerConfig = await this.issuerConfigFetcher.fetchConfig(
       new URL(issuer as string)
     );
+    console.log("2");
 
     // Check that this issuer supports the provided request
     if (
@@ -64,6 +65,7 @@ export default class TokenRequester {
       (!issuerConfig.grantTypesSupported ||
         !issuerConfig.grantTypesSupported.includes(body.grant_type))
     ) {
+      console.log(issuerConfig.grantTypesSupported);
       throw new Error(
         `The issuer ${issuer} does not support the ${body.grant_type} grant`
       );
@@ -71,6 +73,7 @@ export default class TokenRequester {
     if (!issuerConfig.tokenEndpoint) {
       throw new Error(`This issuer ${issuer} does not have a token endpoint`);
     }
+    console.log("making request");
 
     // Make request
     const tokenRequestInit: RequestInit & {
