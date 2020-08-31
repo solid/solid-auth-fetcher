@@ -26,11 +26,9 @@ import "reflect-metadata";
 import { StorageMock } from "../../src/localStorage/__mocks__/Storage";
 import StorageUtility from "../../src/localStorage/StorageUtility";
 
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
-
 describe("StorageUtility", () => {
   const defaultMocks = {
-    storage: StorageMock
+    storage: StorageMock,
   };
   function getStorageUtility(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -88,7 +86,7 @@ describe("StorageUtility", () => {
       const storageMock = defaultMocks.storage;
       const userData = {
         jackie: "The Cat",
-        sledge: "The Dog"
+        sledge: "The Dog",
       };
       storageMock.get.mockReturnValueOnce(
         Promise.resolve(JSON.stringify(userData))
@@ -140,7 +138,7 @@ describe("StorageUtility", () => {
       const storageMock = defaultMocks.storage;
       const userData = {
         jackie: "The Cat",
-        sledge: "The Dog"
+        sledge: "The Dog",
       };
       storageMock.get.mockReturnValueOnce(
         Promise.resolve(JSON.stringify(userData))
@@ -154,7 +152,7 @@ describe("StorageUtility", () => {
         "solidAuthFetcherUser:animals",
         JSON.stringify({
           jackie: "The Pretty Kitty",
-          sledge: "The Dog"
+          sledge: "The Dog",
         })
       );
     });
@@ -172,7 +170,7 @@ describe("StorageUtility", () => {
       expect(storageMock.set).toHaveBeenCalledWith(
         "solidAuthFetcherUser:animals",
         JSON.stringify({
-          jackie: "The Pretty Kitty"
+          jackie: "The Pretty Kitty",
         })
       );
     });
@@ -183,7 +181,7 @@ describe("StorageUtility", () => {
       const storageMock = defaultMocks.storage;
       const userData = {
         jackie: "The Cat",
-        sledge: "The Dog"
+        sledge: "The Dog",
       };
       storageMock.get.mockReturnValueOnce(
         Promise.resolve(JSON.stringify(userData))
@@ -196,7 +194,7 @@ describe("StorageUtility", () => {
       expect(storageMock.set).toHaveBeenCalledWith(
         "solidAuthFetcherUser:animals",
         JSON.stringify({
-          sledge: "The Dog"
+          sledge: "The Dog",
         })
       );
     });
@@ -220,7 +218,7 @@ describe("StorageUtility", () => {
       );
       const storageUtility = getStorageUtility();
       await expect(storageUtility.safeGet("key")).resolves.toEqual({
-        some: "data"
+        some: "data",
       });
     });
 
@@ -244,13 +242,13 @@ describe("StorageUtility", () => {
       const schema = {
         type: "object",
         properties: {
-          some: { type: "string" }
-        }
+          some: { type: "string" },
+        },
       };
       const storageUtility = getStorageUtility();
       expect(
         await storageUtility.safeGet("arbitrary key", {
-          schema
+          schema,
         })
       ).toMatchObject({ some: "data" });
     });
@@ -262,13 +260,13 @@ describe("StorageUtility", () => {
       const schema = {
         type: "object",
         properties: {
-          some: { type: "string" }
-        }
+          some: { type: "string" },
+        },
       };
       const storageUtility = getStorageUtility();
       expect(
         await storageUtility.safeGet("arbitrary key", {
-          schema
+          schema,
         })
       ).toBeNull();
       expect(defaultMocks.storage.delete).toHaveBeenCalledWith("arbitrary key");
@@ -288,7 +286,7 @@ describe("StorageUtility", () => {
       defaultMocks.storage.get.mockReturnValueOnce(
         Promise.resolve(
           JSON.stringify({
-            key: '{ "some": "notice this does not have a closing quote }'
+            key: '{ "some": "notice this does not have a closing quote }',
           })
         )
       );

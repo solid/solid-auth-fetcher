@@ -43,9 +43,9 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code", "implicit", "device"]
-        }
-      }
+          grantTypesSupported: ["authorization_code", "implicit", "device"],
+        },
+      },
     },
     {
       message:
@@ -55,9 +55,9 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["implicit"]
-        }
-      }
+          grantTypesSupported: ["implicit"],
+        },
+      },
     },
     {
       message:
@@ -67,16 +67,16 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code", "device"]
-        }
-      }
+          grantTypesSupported: ["authorization_code", "device"],
+        },
+      },
     },
     {
       message:
         "shouldn't accept a configuration that does not include grant types",
       shouldPass: false,
-      oidcOptions: standardOidcOptions
-    }
+      oidcOptions: standardOidcOptions,
+    },
   ],
   authorizationCodeWithPkceOidcHandler: [
     {
@@ -87,9 +87,9 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code", "implicit", "device"]
-        }
-      }
+          grantTypesSupported: ["authorization_code", "implicit", "device"],
+        },
+      },
     },
     {
       message:
@@ -99,9 +99,9 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code"]
-        }
-      }
+          grantTypesSupported: ["authorization_code"],
+        },
+      },
     },
     {
       message:
@@ -111,17 +111,17 @@ const canHandleTests: {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["implicit", "device"]
-        }
-      }
+          grantTypesSupported: ["implicit", "device"],
+        },
+      },
     },
     {
       message:
         "shouldn't accept a configuration that does not include grant types",
       shouldPass: false,
-      oidcOptions: standardOidcOptions
-    }
-  ]
+      oidcOptions: standardOidcOptions,
+    },
+  ],
 };
 
 export default canHandleTests;

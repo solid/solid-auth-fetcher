@@ -229,7 +229,6 @@ export default function getAuthFetcherWithDependencies(dependencies: {
   let storage: IStorage;
   if (dependencies.storage) {
     storage = dependencies.storage;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore This must be ignored rather than cast to any because the ts compile will not accept an any cast for lib elements
   } else if (typeof document != "undefined") {
     storage = new BrowserStorage();

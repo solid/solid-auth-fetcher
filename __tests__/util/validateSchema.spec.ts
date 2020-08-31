@@ -28,8 +28,8 @@ describe("validateSchema", () => {
     const schema = {
       type: "object",
       properties: {
-        foo: { type: "number" }
-      }
+        foo: { type: "number" },
+      },
     };
 
     expect(() => validateSchema(schema, { foo: 42 })).not.toThrow();
@@ -39,8 +39,8 @@ describe("validateSchema", () => {
     const schema = {
       type: "object",
       properties: {
-        foo: { type: "number" }
-      }
+        foo: { type: "number" },
+      },
     };
 
     expect(() => validateSchema(schema, { foo: 42 })).not.toThrow();
@@ -54,8 +54,8 @@ describe("validateSchema", () => {
     const schema = {
       type: "object",
       properties: {
-        foo: { type: "number" }
-      }
+        foo: { type: "number" },
+      },
     };
 
     expect(() => validateSchema(schema, { foo: "Not a number" })).toThrow();
@@ -65,8 +65,8 @@ describe("validateSchema", () => {
     const schema = {
       type: "object",
       properties: {
-        foo: { type: "number" }
-      }
+        foo: { type: "number" },
+      },
     };
 
     expect(() => validateSchema(schema, { foo: "Not a number" })).toThrowError(
@@ -79,8 +79,8 @@ describe("validateSchema", () => {
       title: "Some schema",
       type: "object",
       properties: {
-        foo: { type: "number" }
-      }
+        foo: { type: "number" },
+      },
     };
 
     expect(() => validateSchema(schema, { foo: "Not a number" })).toThrowError(
@@ -93,8 +93,8 @@ describe("validateSchema", () => {
       const schema = {
         type: "object",
         properties: {
-          foo: { typeof: "number" }
-        }
+          foo: { typeof: "number" },
+        },
       };
 
       expect(() => validateSchema(schema, { foo: 42 })).not.toThrow();
@@ -104,8 +104,8 @@ describe("validateSchema", () => {
       const schema = {
         type: "object",
         properties: {
-          foo: { typeof: "number" }
-        }
+          foo: { typeof: "number" },
+        },
       };
 
       expect(() => validateSchema(schema, { foo: "Not a number" })).toThrow();
@@ -114,8 +114,8 @@ describe("validateSchema", () => {
       const schema = {
         type: "object",
         properties: {
-          foo: { typeof: "function" }
-        }
+          foo: { typeof: "function" },
+        },
       };
 
       expect(() => validateSchema(schema, { foo: () => 1337 })).not.toThrow();
@@ -125,8 +125,8 @@ describe("validateSchema", () => {
       const schema = {
         type: "object",
         properties: {
-          foo: { typeof: "function" }
-        }
+          foo: { typeof: "function" },
+        },
       };
 
       expect(() => validateSchema(schema, { foo: 42 })).toThrow();
@@ -136,8 +136,8 @@ describe("validateSchema", () => {
       const schema = {
         type: "object",
         properties: {
-          foo: { typeof: "number" }
-        }
+          foo: { typeof: "number" },
+        },
       };
 
       expect(() =>
@@ -159,15 +159,15 @@ describe("validateSchema", () => {
               "necessarily",
               "in",
               "this",
-              "order"
-            ]
-          }
-        }
+              "order",
+            ],
+          },
+        },
       };
 
       expect(() =>
         validateSchema(schema, {
-          foo: "not necessarily some words in this order"
+          foo: "not necessarily some words in this order",
         })
       ).not.toThrow();
     });
@@ -184,16 +184,16 @@ describe("validateSchema", () => {
               "necessarily",
               "in",
               "this",
-              "order"
-            ]
-          }
-        }
+              "order",
+            ],
+          },
+        },
       };
 
       expect(() =>
         validateSchema(schema, {
           foo:
-            "some words in this order but not necessarily with just those words "
+            "some words in this order but not necessarily with just those words ",
         })
       ).toThrow();
     });
@@ -211,10 +211,10 @@ describe("validateSchema", () => {
               "necessarily",
               "in",
               "this",
-              "order"
-            ]
-          }
-        }
+              "order",
+            ],
+          },
+        },
       };
 
       expect(validateSchema(schema, { foo: "some words" })).toThrow();
@@ -227,11 +227,11 @@ describe("validateSchema", () => {
         {
           type: "object",
           properties: {
-            foo: { type: "string", shouldConvertToUrl: true }
-          }
+            foo: { type: "string", shouldConvertToUrl: true },
+          },
         },
         {
-          foo: "https://cool.com/nice"
+          foo: "https://cool.com/nice",
         }
       );
       expect(newObj.foo.origin).toBe("https://cool.com");
@@ -247,17 +247,17 @@ describe("validateSchema", () => {
               items: {
                 type: "object",
                 properties: {
-                  url: { type: "string", shouldConvertToUrl: true }
-                }
-              }
-            }
-          }
+                  url: { type: "string", shouldConvertToUrl: true },
+                },
+              },
+            },
+          },
         },
         {
           arr: [
             { url: "https://cool.com/nice" },
-            { url: "https://lame.com/mean" }
-          ]
+            { url: "https://lame.com/mean" },
+          ],
         }
       );
       expect(newObj.arr[0].url.origin).toBe("https://cool.com");
@@ -271,19 +271,19 @@ describe("validateSchema", () => {
             type: "object",
             properties: {
               arr: {
-                type: "array"
+                type: "array",
               },
               obj: {
-                type: "object"
-              }
-            }
+                type: "object",
+              },
+            },
           },
           {
             arr: [1, "cool"],
             obj: {
               foo: "foo",
-              bar: "bar"
-            }
+              bar: "bar",
+            },
           }
         )
       ).not.toThrowError();

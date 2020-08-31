@@ -34,7 +34,7 @@ describe("AggregateOidcHandler", () => {
     new AggregateOidcHandler((["Some handler"] as unknown) as IOidcHandler[]);
 
     expect((AggregateHandler as jest.Mock).mock.calls).toEqual([
-      [["Some handler"]]
+      [["Some handler"]],
     ]);
   });
 });

@@ -28,7 +28,8 @@ import IHandleable from "../../../src/util/handlerPattern/IHandleable";
 describe("AggregateHandler", () => {
   // Set up mock extension
   type MockHandler = IHandleable<[string], string>;
-  class AggregateMockHandler extends AggregateHandler<[string], string>
+  class AggregateMockHandler
+    extends AggregateHandler<[string], string>
     implements MockHandler {
     constructor(mockHandlers: MockHandler[]) {
       super(mockHandlers);
@@ -39,7 +40,7 @@ describe("AggregateHandler", () => {
   function initMocks(
     configs: { canHandle: boolean; executeTime: number; toReturn: string }[]
   ) {
-    const mockHandlerInfo = configs.map(config => {
+    const mockHandlerInfo = configs.map((config) => {
       const canHandleFunction: jest.Mock<Promise<boolean>, [string]> = jest.fn(
         async (input: string): Promise<boolean> => {
           return new Promise((resolve, reject) => {
@@ -56,20 +57,20 @@ describe("AggregateHandler", () => {
       );
       const mock: () => MockHandler = jest.fn<MockHandler, unknown[]>(() => ({
         canHandle: canHandleFunction,
-        handle: handleFunction
+        handle: handleFunction,
       }));
       return {
         canHandleFunction,
         handleFunction,
-        mock
+        mock,
       };
     });
     const aggregateMockHandler = new AggregateMockHandler(
-      mockHandlerInfo.map(info => info.mock())
+      mockHandlerInfo.map((info) => info.mock())
     );
     return {
       mockHandlerInfo,
-      aggregateMockHandler
+      aggregateMockHandler,
     };
   }
 
@@ -77,7 +78,7 @@ describe("AggregateHandler", () => {
     it("should return correct handler", async () => {
       const mocks = initMocks([
         { canHandle: true, executeTime: 0, toReturn: "" },
-        { canHandle: false, executeTime: 0, toReturn: "" }
+        { canHandle: false, executeTime: 0, toReturn: "" },
       ]);
       const result = await mocks.aggregateMockHandler.canHandle("something");
       expect(result).toBe(true);
@@ -86,7 +87,7 @@ describe("AggregateHandler", () => {
     it("should error if there is no correct handler", async () => {
       const mocks = initMocks([
         { canHandle: false, executeTime: 0, toReturn: "" },
-        { canHandle: false, executeTime: 0, toReturn: "" }
+        { canHandle: false, executeTime: 0, toReturn: "" },
       ]);
       expect(await mocks.aggregateMockHandler.canHandle("something")).toBe(
         false
@@ -97,7 +98,7 @@ describe("AggregateHandler", () => {
   describe("handle", () => {
     it("should execute the handler", async () => {
       const mocks = initMocks([
-        { canHandle: true, executeTime: 0, toReturn: "allGood" }
+        { canHandle: true, executeTime: 0, toReturn: "allGood" },
       ]);
       const result = await mocks.aggregateMockHandler.handle("something");
       expect(result).toBe("allGood");
@@ -114,7 +115,7 @@ describe("AggregateHandler", () => {
     it("should error when there is no correct handler", async () => {
       const mocks = initMocks([
         { canHandle: false, executeTime: 0, toReturn: "" },
-        { canHandle: false, executeTime: 0, toReturn: "" }
+        { canHandle: false, executeTime: 0, toReturn: "" },
       ]);
       // For some reason the test didn't show up in coverage logs if I didn't do it like this
       try {

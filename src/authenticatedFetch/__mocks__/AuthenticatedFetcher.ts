@@ -34,12 +34,12 @@ export const AuthenticatedFetcherMock: jest.Mocked<IAuthenticatedFetcher> = {
       requestInfo: RequestInfo,
       requestInit: RequestInit
     ) => true as boolean
-  ),
+  ) as any,
   handle: jest.fn(
     async (
       requestCredentials: IRequestCredentials,
       requestInfo: RequestInfo,
       requestInit: RequestInit
     ) => AuthenticatedFetcherResponse
-  ),
+  ) as any,
 };

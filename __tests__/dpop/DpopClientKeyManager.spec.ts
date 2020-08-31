@@ -28,7 +28,7 @@ import "reflect-metadata";
 import { StorageUtilityMock } from "../../src/localStorage/__mocks__/StorageUtility";
 import {
   JoseUtilityMock,
-  JoseUtilityGenerateJWKResponse
+  JoseUtilityGenerateJWKResponse,
 } from "../../src/jose/__mocks__/JoseUtility";
 import DpopClientKeyManager from "../../src/dpop/DpopClientKeyManager";
 import IOidcOptions from "../../src/login/oidc/IOidcOptions";
@@ -37,7 +37,7 @@ import OidcHandlerCanHandleTests from "../login/oidc/oidcHandlers/OidcHandlerCan
 describe("DpopClientKeyManager", () => {
   const defaultMocks = {
     joseUtility: JoseUtilityMock,
-    storageUtility: StorageUtilityMock
+    storageUtility: StorageUtilityMock,
   };
   function getDpopClientKeyManager(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -58,7 +58,7 @@ describe("DpopClientKeyManager", () => {
       const storageRetrieverMock = StorageUtilityMock;
       storageRetrieverMock.safeGet.mockReturnValueOnce(Promise.resolve(null));
       const dpopClientKeyManager = getDpopClientKeyManager({
-        storageUtility: storageRetrieverMock
+        storageUtility: storageRetrieverMock,
       });
 
       await dpopClientKeyManager.generateClientKeyIfNotAlready(
@@ -77,7 +77,7 @@ describe("DpopClientKeyManager", () => {
         Promise.resolve({ kty: "RSA" })
       );
       const dpopClientKeyManager = getDpopClientKeyManager({
-        storageUtility: storageUtilityMock
+        storageUtility: storageUtilityMock,
       });
 
       await dpopClientKeyManager.generateClientKeyIfNotAlready(
@@ -94,7 +94,7 @@ describe("DpopClientKeyManager", () => {
       const storageUtilityMock = StorageUtilityMock;
       storageUtilityMock.safeGet.mockReturnValueOnce(Promise.resolve(savedKey));
       const dpopClientKeyManager = getDpopClientKeyManager({
-        storageUtility: storageUtilityMock
+        storageUtility: storageUtilityMock,
       });
 
       const clientKey = await dpopClientKeyManager.getClientKey();

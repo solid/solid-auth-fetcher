@@ -29,16 +29,16 @@ import DpopAuthenticatedFetcher from "../../../src/authenticatedFetch/dpop/DpopA
 import URL from "url-parse";
 import {
   DpopHeaderCreatorMock,
-  DpopHeaderCreatorResponse
+  DpopHeaderCreatorResponse,
 } from "../../../src/dpop/__mocks__/DpopHeaderCreator";
 import {
   FetcherMock,
-  FetcherMockResponse
+  FetcherMockResponse,
 } from "../../../src/util/__mocks__/Fetcher";
 import { UrlRepresentationConverterMock } from "../../../src/util/__mocks__/UrlRepresentationConverter";
 import {
   StorageUtilityMock,
-  StorageUtilityGetResponse
+  StorageUtilityGetResponse,
 } from "../../../src/localStorage/__mocks__/StorageUtility";
 
 describe("DpopAuthenticatedFetcher", () => {
@@ -46,7 +46,7 @@ describe("DpopAuthenticatedFetcher", () => {
     fetcher: FetcherMock,
     dpopHeaderCreator: DpopHeaderCreatorMock,
     urlRepresentationConverter: UrlRepresentationConverterMock,
-    storageUtility: StorageUtilityMock
+    storageUtility: StorageUtilityMock,
   };
   function getDpopAuthenticatedFetcher(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -103,12 +103,12 @@ describe("DpopAuthenticatedFetcher", () => {
       const fetcher = FetcherMock;
       const dpopAuthenticatedFetcher = getDpopAuthenticatedFetcher({
         dpopHeaderCreator: dpopHeaderCreator,
-        fetcher: fetcher
+        fetcher: fetcher,
       });
       const url = new URL("https://example.com");
       const requestCredentials = {
         type: "dpop",
-        localUserId: "global"
+        localUserId: "global",
       };
       const init = {};
       const response = await dpopAuthenticatedFetcher.handle(
@@ -123,8 +123,8 @@ describe("DpopAuthenticatedFetcher", () => {
       expect(fetcher.fetch).toHaveBeenCalledWith(url.toString(), {
         headers: {
           authorization: `DPOP ${StorageUtilityGetResponse}`,
-          dpop: DpopHeaderCreatorResponse
-        }
+          dpop: DpopHeaderCreatorResponse,
+        },
       });
       expect(response).toBe(FetcherMockResponse);
     });
@@ -135,12 +135,12 @@ describe("DpopAuthenticatedFetcher", () => {
     const fetcher = FetcherMock;
     const dpopAuthenticatedFetcher = getDpopAuthenticatedFetcher({
       dpopHeaderCreator: dpopHeaderCreator,
-      fetcher: fetcher
+      fetcher: fetcher,
     });
     const url = new URL("https://example.com");
     const requestCredentials = {
       type: "dpop",
-      localUserId: "global"
+      localUserId: "global",
     };
     const init = { headers: { Accept: "text/turtle" } };
     const response = await dpopAuthenticatedFetcher.handle(
@@ -156,8 +156,8 @@ describe("DpopAuthenticatedFetcher", () => {
       headers: {
         authorization: `DPOP ${StorageUtilityGetResponse}`,
         dpop: DpopHeaderCreatorResponse,
-        Accept: "text/turtle"
-      }
+        Accept: "text/turtle",
+      },
     });
     expect(response).toBe(FetcherMockResponse);
   });

@@ -27,11 +27,11 @@ import PopUpLoginHandler from "../../../src/login/popUp/PopUpLoginHandler";
 import { EnvironmentDetectorMock } from "../../../src/util/__mocks__/EnvironmentDetector";
 import {
   SessionCreatorMock,
-  SessionCreatorCreateResponse
+  SessionCreatorCreateResponse,
 } from "../../../src/solidSession/__mocks__/SessionCreator";
 import {
   LoginHandlerMock,
-  LoginHandlerResponse
+  LoginHandlerResponse,
 } from "../../../src/login/__mocks__/LoginHandler";
 import URL from "url-parse";
 import INeededRedirectAction from "../../../src/solidSession/INeededRedirectAction";
@@ -40,7 +40,7 @@ describe("PopUpLoginHandler", () => {
   const defaultMocks = {
     environmentDetector: EnvironmentDetectorMock,
     loginHandler: LoginHandlerMock,
-    sessionCreator: SessionCreatorMock
+    sessionCreator: SessionCreatorMock,
   };
   function getInitialisedHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -58,7 +58,7 @@ describe("PopUpLoginHandler", () => {
       expect(
         await handler.canHandle({
           popUp: true,
-          popUpRedirectPath: "/redirect"
+          popUpRedirectPath: "/redirect",
         })
       ).toBe(true);
     });
@@ -67,7 +67,7 @@ describe("PopUpLoginHandler", () => {
       expect(
         await handler.canHandle({
           popUp: false,
-          redirect: new URL("https://coolsite.com/redirect")
+          redirect: new URL("https://coolsite.com/redirect"),
         })
       ).toBe(false);
     });
@@ -76,9 +76,9 @@ describe("PopUpLoginHandler", () => {
   describe("handle", () => {
     it("can handle popup", async () => {
       const { open } = window;
-      delete window.open;
+      delete (window as any).open;
       const popUpWindowObject = {
-        closed: false
+        closed: false,
       } as Window;
       window.open = jest.fn(() => popUpWindowObject);
 
@@ -89,7 +89,7 @@ describe("PopUpLoginHandler", () => {
       }, 1000);
       const session = await handler.handle({
         popUp: true,
-        popUpRedirectPath: "/redirect"
+        popUpRedirectPath: "/redirect",
       });
       expect(window.open).toHaveBeenCalledWith(
         (LoginHandlerResponse.neededAction as INeededRedirectAction)

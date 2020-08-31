@@ -29,19 +29,19 @@ import UnauthenticatedFetcher from "../../../src/authenticatedFetch/unauthentica
 import URL from "url-parse";
 import {
   FetcherMock,
-  FetcherMockResponse
+  FetcherMockResponse,
 } from "../../../src/util/__mocks__/Fetcher";
 import { UrlRepresentationConverterMock } from "../../../src/util/__mocks__/UrlRepresentationConverter";
 import {
   StorageUtilityMock,
-  StorageUtilityGetResponse
+  StorageUtilityGetResponse,
 } from "../../../src/localStorage/__mocks__/StorageUtility";
 
 describe("UnauthenticatedFetcher", () => {
   const defaultMocks = {
     fetcher: FetcherMock,
     urlRepresentationConverter: UrlRepresentationConverterMock,
-    storageUtility: StorageUtilityMock
+    storageUtility: StorageUtilityMock,
   };
   function getUnauthenticatedFetcher(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -72,7 +72,7 @@ describe("UnauthenticatedFetcher", () => {
       defaultMocks.storageUtility.getForUser.mockResolvedValueOnce(null);
       const fetcher = FetcherMock;
       const unauthenticatedFetcher = getUnauthenticatedFetcher({
-        fetcher: fetcher
+        fetcher: fetcher,
       });
       const url = "http://someurl.com";
       await unauthenticatedFetcher.handle(
@@ -81,7 +81,7 @@ describe("UnauthenticatedFetcher", () => {
       );
       expect(fetcher.fetch).toHaveBeenCalledWith(url, {
         headers: {},
-        method: "GET"
+        method: "GET",
       });
     });
 
@@ -89,7 +89,7 @@ describe("UnauthenticatedFetcher", () => {
       defaultMocks.storageUtility.getForUser.mockResolvedValueOnce(null);
       const fetcher = FetcherMock;
       const unauthenticatedFetcher = getUnauthenticatedFetcher({
-        fetcher: fetcher
+        fetcher: fetcher,
       });
       const url = "http://someurl.com";
       await unauthenticatedFetcher.handle(
@@ -99,7 +99,7 @@ describe("UnauthenticatedFetcher", () => {
       );
       expect(fetcher.fetch).toHaveBeenCalledWith(url, {
         headers: { Accept: "text/turtle" },
-        method: "GET"
+        method: "GET",
       });
     });
 
@@ -107,7 +107,7 @@ describe("UnauthenticatedFetcher", () => {
       defaultMocks.storageUtility.getForUser.mockResolvedValueOnce(null);
       const fetcher = FetcherMock;
       const unauthenticatedFetcher = getUnauthenticatedFetcher({
-        fetcher: fetcher
+        fetcher: fetcher,
       });
       const url = "http://someurl.com";
       await unauthenticatedFetcher.handle(
@@ -117,7 +117,7 @@ describe("UnauthenticatedFetcher", () => {
       );
       expect(fetcher.fetch).toHaveBeenCalledWith(url, {
         headers: {},
-        method: "HEAD"
+        method: "HEAD",
       });
     });
   });

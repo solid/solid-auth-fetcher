@@ -24,13 +24,13 @@
 import "reflect-metadata";
 import {
   TokenSaverMock,
-  TokenSaverSaveTokenAndGetSessionResponse
+  TokenSaverSaveTokenAndGetSessionResponse,
 } from "../../../../src/login/oidc/redirectHandler/__mocks__/TokenSaver";
 import GeneralRedirectHandler from "../../../../src/login/oidc/redirectHandler/GeneralRedirectHandler";
 
 describe("GeneralRedirectHandler", () => {
   const defaultMocks = {
-    tokenSaver: TokenSaverMock
+    tokenSaver: TokenSaverMock,
   };
   function getGeneralRedirectHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks

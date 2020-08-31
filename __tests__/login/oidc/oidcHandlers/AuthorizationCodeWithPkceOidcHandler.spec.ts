@@ -35,7 +35,7 @@ import IOidcOptions from "../../../../src/login/oidc/IOidcOptions";
 import { standardOidcOptions } from "../../../../src/login/oidc/__mocks__/IOidcOptions";
 import {
   RedirectorMock,
-  RedirectorResponse
+  RedirectorResponse,
 } from "../../../../src/login/oidc/__mocks__/Redirector";
 
 describe("AuthorizationCodeWithPkceOidcHandler", () => {
@@ -43,7 +43,7 @@ describe("AuthorizationCodeWithPkceOidcHandler", () => {
     sessionCreator: SessionCreatorMock,
     joseUtility: JoseUtilityMock,
     storageUtility: StorageUtilityMock,
-    redirector: RedirectorMock
+    redirector: RedirectorMock,
   };
   function getAuthorizationCodeWithPkceOidcHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -59,7 +59,7 @@ describe("AuthorizationCodeWithPkceOidcHandler", () => {
   describe("canHandle", () => {
     const authorizationCodeWithPkceOidcHandler = getAuthorizationCodeWithPkceOidcHandler();
     canHandleTests["authorizationCodeWithPkceOidcHandler"].forEach(
-      testConfig => {
+      (testConfig) => {
         it(testConfig.message, async () => {
           const value = await authorizationCodeWithPkceOidcHandler.canHandle(
             testConfig.oidcOptions
@@ -77,8 +77,8 @@ describe("AuthorizationCodeWithPkceOidcHandler", () => {
         ...standardOidcOptions,
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code"]
-        }
+          grantTypesSupported: ["authorization_code"],
+        },
       };
       const session: ISolidSession = await authorizationCodeWithPkceOidcHandler.handle(
         oidcOptions
@@ -98,12 +98,12 @@ describe("AuthorizationCodeWithPkceOidcHandler", () => {
         ...standardOidcOptions,
         client: {
           ...standardOidcOptions.client,
-          clientSecret: "I can't cook because I only drink Soylent"
+          clientSecret: "I can't cook because I only drink Soylent",
         },
         issuerConfiguration: {
           ...standardOidcOptions.issuerConfiguration,
-          grantTypesSupported: ["authorization_code"]
-        }
+          grantTypesSupported: ["authorization_code"],
+        },
       };
       const session: ISolidSession = await authorizationCodeWithPkceOidcHandler.handle(
         oidcOptions

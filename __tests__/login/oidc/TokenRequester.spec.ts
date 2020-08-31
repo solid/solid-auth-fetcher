@@ -25,12 +25,12 @@ import "reflect-metadata";
 import { FetcherMock } from "../../../src/util/__mocks__/Fetcher";
 import {
   IssuerConfigFetcherMock,
-  IssuerConfigFetcherFetchConfigResponse
+  IssuerConfigFetcherFetchConfigResponse,
 } from "../../../src/login/oidc/__mocks__/IssuerConfigFetcher";
 import { StorageUtilityMock } from "../../../src/localStorage/__mocks__/StorageUtility";
 import {
   DpopHeaderCreatorMock,
-  DpopHeaderCreatorResponse
+  DpopHeaderCreatorResponse,
 } from "../../../src/dpop/__mocks__/DpopHeaderCreator";
 import { Response as NodeResponse } from "node-fetch";
 import TokenRequester from "../../../src/login/oidc/TokenRequester";
@@ -43,7 +43,7 @@ describe("TokenRequester", () => {
     issueConfigFetcher: IssuerConfigFetcherMock,
     fetcher: FetcherMock,
     dpopHeaderCreator: DpopHeaderCreatorMock,
-    joseUtility: JoseUtilityMock
+    joseUtility: JoseUtilityMock,
   };
   function getTokenRequester(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -73,7 +73,7 @@ describe("TokenRequester", () => {
     issuerConfig: {
       ...IssuerConfigFetcherFetchConfigResponse,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      grantTypesSupported: ["refresh_token"]
+      grantTypesSupported: ["refresh_token"],
     },
     responseBody: JSON.stringify({
       // eslint-disable-next-line @typescript-eslint/camelcase
@@ -81,11 +81,11 @@ describe("TokenRequester", () => {
       // eslint-disable-next-line @typescript-eslint/camelcase
       access_token: "1234",
       // eslint-disable-next-line @typescript-eslint/camelcase
-      refresh_token: "!@#$"
+      refresh_token: "!@#$",
     }),
     jwt: {
-      sub: "https://jackson.solid.community/profile/card#me"
-    }
+      sub: "https://jackson.solid.community/profile/card#me",
+    },
   };
   function setUpMockedReturnValues(
     values: Partial<typeof defaultReturnValues>
@@ -121,7 +121,7 @@ describe("TokenRequester", () => {
     /* eslint-disable @typescript-eslint/camelcase */
     await TokenRefresher.request("global", {
       grant_type: "refresh_token",
-      refresh_token: "thisIsARefreshToken"
+      refresh_token: "thisIsARefreshToken",
     });
     /* eslint-enable @typescript-eslint/camelcase */
     expect(defaultMocks.fetcher.fetch).toBeCalledWith(
@@ -130,23 +130,23 @@ describe("TokenRequester", () => {
         method: "POST",
         headers: {
           DPoP: DpopHeaderCreatorResponse,
-          "content-type": "application/x-www-form-urlencoded"
+          "content-type": "application/x-www-form-urlencoded",
         },
         body:
-          "grant_type=refresh_token&refresh_token=thisIsARefreshToken&client_id=coolApp"
+          "grant_type=refresh_token&refresh_token=thisIsARefreshToken&client_id=coolApp",
       }
     );
   });
 
   it("Adds an authorization header if a client secret is present", async () => {
     setUpMockedReturnValues({
-      storageClientSecret: "theSecretSauceIsJustMayo"
+      storageClientSecret: "theSecretSauceIsJustMayo",
     });
     const TokenRefresher = getTokenRequester();
     /* eslint-disable @typescript-eslint/camelcase */
     await TokenRefresher.request("global", {
       grant_type: "refresh_token",
-      refresh_token: "thisIsARefreshToken"
+      refresh_token: "thisIsARefreshToken",
     });
     /* eslint-enable @typescript-eslint/camelcase */
     expect(defaultMocks.fetcher.fetch).toBeCalledWith(
@@ -156,10 +156,10 @@ describe("TokenRequester", () => {
         headers: {
           DPoP: DpopHeaderCreatorResponse,
           Authorization: "Basic Y29vbEFwcDp0aGVTZWNyZXRTYXVjZUlzSnVzdE1heW8=",
-          "content-type": "application/x-www-form-urlencoded"
+          "content-type": "application/x-www-form-urlencoded",
         },
         body:
-          "grant_type=refresh_token&refresh_token=thisIsARefreshToken&client_id=coolApp"
+          "grant_type=refresh_token&refresh_token=thisIsARefreshToken&client_id=coolApp",
       }
     );
   });
@@ -168,15 +168,15 @@ describe("TokenRequester", () => {
     setUpMockedReturnValues({
       responseBody: JSON.stringify({
         // eslint-disable-next-line @typescript-eslint/camelcase
-        id_token: "ohNoThereIsNoAccessToken"
-      })
+        id_token: "ohNoThereIsNoAccessToken",
+      }),
     });
     const TokenRefresher = getTokenRequester();
     await expect(
       /* eslint-disable @typescript-eslint/camelcase */
       TokenRefresher.request("global", {
         grant_type: "refresh_token",
-        refresh_token: "thisIsARefreshToken"
+        refresh_token: "thisIsARefreshToken",
       })
       /* eslint-enable @typescript-eslint/camelcase */
     ).rejects.toThrowError("IDP token route returned an invalid response.");
@@ -187,15 +187,15 @@ describe("TokenRequester", () => {
       issuerConfig: {
         ...IssuerConfigFetcherFetchConfigResponse,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        grantTypesSupported: ["id_token"]
-      }
+        grantTypesSupported: ["id_token"],
+      },
     });
     const TokenRefresher = getTokenRequester();
     await expect(
       /* eslint-disable @typescript-eslint/camelcase */
       TokenRefresher.request("global", {
         grant_type: "refresh_token",
-        refresh_token: "thisIsARefreshToken"
+        refresh_token: "thisIsARefreshToken",
       })
       /* eslint-enable @typescript-eslint/camelcase */
     ).rejects.toThrowError(
@@ -207,21 +207,18 @@ describe("TokenRequester", () => {
     setUpMockedReturnValues({
       issuerConfig: {
         ...IssuerConfigFetcherFetchConfigResponse,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore This is ignored to test an edge case
         tokenEndpoint: null,
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        grantTypesSupported: ["refresh_token"]
-      }
+        grantTypesSupported: ["refresh_token"],
+      },
     });
     const TokenRefresher = getTokenRequester();
     await expect(
-      /* eslint-disable @typescript-eslint/camelcase */
       TokenRefresher.request("global", {
         grant_type: "refresh_token",
-        refresh_token: "thisIsARefreshToken"
+        refresh_token: "thisIsARefreshToken",
       })
-      /* eslint-enable @typescript-eslint/camelcase */
     ).rejects.toThrowError(
       "This issuer https://idp.com does not have a token endpoint"
     );
@@ -230,15 +227,15 @@ describe("TokenRequester", () => {
   it("Fails elegantly if the access token does not have a sub claim", async () => {
     setUpMockedReturnValues({
       jwt: {
-        iss: "https://idp.com"
-      }
+        iss: "https://idp.com",
+      },
     });
     const TokenRefresher = getTokenRequester();
     await expect(
       /* eslint-disable @typescript-eslint/camelcase */
       TokenRefresher.request("global", {
         grant_type: "refresh_token",
-        refresh_token: "thisIsARefreshToken"
+        refresh_token: "thisIsARefreshToken",
       })
       /* eslint-enable @typescript-eslint/camelcase */
     ).rejects.toThrowError("The idp returned a bad token without a sub.");

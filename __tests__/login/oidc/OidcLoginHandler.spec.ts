@@ -31,15 +31,13 @@ import { StorageUtilityMock } from "../../../src/localStorage/__mocks__/StorageU
 import { DpopClientKeyManagerMock } from "../../../src/dpop/__mocks__/DpopClientKeyManager";
 import { ClientRegistrarMock } from "../../../src/login/oidc/__mocks__/ClientRegistrar";
 
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
-
 describe("OidcLoginHandler", () => {
   const defaultMocks = {
     oidcHandler: OidcHandlerMock,
     issuerConfigFetcher: IssuerConfigFetcherMock,
     dpopClientKeyManager: DpopClientKeyManagerMock,
     storageUtility: StorageUtilityMock,
-    clientRegistrar: ClientRegistrarMock
+    clientRegistrar: ClientRegistrarMock,
   };
   function getInitialisedHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -59,7 +57,7 @@ describe("OidcLoginHandler", () => {
     await handler.handle({
       oidcIssuer: new URL("https://arbitrary.url"),
       redirect: new URL("https://app.com/redirect"),
-      clientId: "coolApp"
+      clientId: "coolApp",
     });
 
     expect(actualHandler.handle.mock.calls.length).toBe(1);
@@ -81,7 +79,7 @@ describe("OidcLoginHandler", () => {
       handler.canHandle({
         oidcIssuer: new URL("https://arbitrary.url"),
         redirect: new URL("https://app.com/redirect"),
-        clientId: "coolApp"
+        clientId: "coolApp",
       })
     ).resolves.toBe(true);
   });

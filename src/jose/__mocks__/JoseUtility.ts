@@ -73,7 +73,7 @@ export const JoseUtilityGenerateCodeVerifierResponse = "codeVerifier";
 export const JoseUtilityGenerateCodeChallengeResponse = "codeChallenge";
 
 export const JoseUtilityMock: jest.Mocked<IJoseUtility> = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore Because of the complex typings in this method, an error is thrown when wrapped in "Mocked"
   generateJWK: jest.fn(
     async (

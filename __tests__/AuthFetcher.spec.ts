@@ -25,20 +25,20 @@
 import "reflect-metadata";
 import {
   LoginHandlerMock,
-  LoginHandlerResponse
+  LoginHandlerResponse,
 } from "../src/login/__mocks__/LoginHandler";
 import {
   RedirectHandlerMock,
-  RedirectHandlerResponse
+  RedirectHandlerResponse,
 } from "../src/login/oidc/redirectHandler/__mocks__/RedirectHandler";
 import { LogoutHandlerMock } from "../src/logout/__mocks__/LogoutHandler";
 import {
   SessionCreatorMock,
-  SessionCreatorCreateResponse
+  SessionCreatorCreateResponse,
 } from "../src/solidSession/__mocks__/SessionCreator";
 import {
   AuthenticatedFetcherMock,
-  AuthenticatedFetcherResponse
+  AuthenticatedFetcherResponse,
 } from "../src/authenticatedFetch/__mocks__/AuthenticatedFetcher";
 import { EnvironmentDetectorMock } from "../src/util/__mocks__/EnvironmentDetector";
 import AuthFetcher from "../src/AuthFetcher";
@@ -51,7 +51,7 @@ describe("AuthFetcher", () => {
     logoutHandler: LogoutHandlerMock,
     sessionCreator: SessionCreatorMock,
     authenticatedFetcher: AuthenticatedFetcherMock,
-    environmentDetector: EnvironmentDetectorMock
+    environmentDetector: EnvironmentDetectorMock,
   };
   function getAuthFetcher(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -72,14 +72,14 @@ describe("AuthFetcher", () => {
       const session = await authFetcher.login({
         clientId: "coolApp",
         redirect: "https://coolapp.com/redirect",
-        oidcIssuer: "https://idp.com"
+        oidcIssuer: "https://idp.com",
       });
       expect(session).toBe(LoginHandlerResponse);
       expect(defaultMocks.loginHandler.handle).toHaveBeenCalledWith({
         localUserId: "global",
         clientId: "coolApp",
         redirect: new URL("https://coolapp.com/redirect"),
-        oidcIssuer: new URL("https://idp.com")
+        oidcIssuer: new URL("https://idp.com"),
       });
     });
   });
@@ -92,7 +92,7 @@ describe("AuthFetcher", () => {
       expect(defaultMocks.authenticatedFetcher.handle).toHaveBeenCalledWith(
         {
           localUserId: "global",
-          type: "dpop"
+          type: "dpop",
         },
         "https://zombo.com",
         undefined
@@ -125,13 +125,13 @@ describe("AuthFetcher", () => {
       const session = await authFetcher.uniqueLogin({
         clientId: "coolApp",
         redirect: "https://coolapp.com/redirect",
-        oidcIssuer: "https://idp.com"
+        oidcIssuer: "https://idp.com",
       });
       expect(session).toBe(LoginHandlerResponse);
       expect(defaultMocks.loginHandler.handle).toHaveBeenCalledWith({
         clientId: "coolApp",
         redirect: new URL("https://coolapp.com/redirect"),
-        oidcIssuer: new URL("https://idp.com")
+        oidcIssuer: new URL("https://idp.com"),
       });
     });
   });

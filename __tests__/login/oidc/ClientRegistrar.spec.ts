@@ -33,7 +33,7 @@ import URL from "url-parse";
  */
 describe("ClientRegistrar", () => {
   const defaultMocks = {
-    fetcher: FetcherMock
+    fetcher: FetcherMock,
   };
   function getClientRegistrar(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -48,12 +48,12 @@ describe("ClientRegistrar", () => {
         await clientRegistrar.getClient(
           {
             redirect: new URL("https://example.com"),
-            clientId: "coolApp"
+            clientId: "coolApp",
           },
           IssuerConfigFetcherFetchConfigResponse
         )
       ).toMatchObject({
-        clientId: "coolApp"
+        clientId: "coolApp",
       });
     });
 
@@ -63,7 +63,7 @@ describe("ClientRegistrar", () => {
         (new NodeResponse(
           JSON.stringify({
             client_id: "abcd",
-            client_secret: "1234"
+            client_secret: "1234",
           })
         ) as unknown) as Response
         /* eslint-enable @typescript-eslint/camelcase */
@@ -73,21 +73,21 @@ describe("ClientRegistrar", () => {
       expect(
         await clientRegistrar.getClient(
           {
-            redirect: new URL("https://example.com")
+            redirect: new URL("https://example.com"),
           },
           {
             ...IssuerConfigFetcherFetchConfigResponse,
-            registrationEndpoint: registrationUrl
+            registrationEndpoint: registrationUrl,
           }
         )
       ).toMatchObject({
         clientId: "abcd",
-        clientSecret: "1234"
+        clientSecret: "1234",
       });
       expect(defaultMocks.fetcher.fetch).toHaveBeenCalledWith(registrationUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           /* eslint-disable @typescript-eslint/camelcase */
@@ -95,9 +95,9 @@ describe("ClientRegistrar", () => {
           redirect_uris: ["https://example.com"],
           subject_type: "pairwise",
           token_endpoint_auth_method: "client_secret_basic",
-          code_challenge_method: "S256"
+          code_challenge_method: "S256",
           /* eslint-enable @typescript-eslint/camelcase */
-        })
+        }),
       });
     });
 
@@ -106,7 +106,7 @@ describe("ClientRegistrar", () => {
       await expect(
         clientRegistrar.getClient(
           {
-            redirect: new URL("https://example.com")
+            redirect: new URL("https://example.com"),
           },
           IssuerConfigFetcherFetchConfigResponse
         )
@@ -119,7 +119,7 @@ describe("ClientRegistrar", () => {
       defaultMocks.fetcher.fetch.mockResolvedValueOnce(
         /* eslint-disable @typescript-eslint/camelcase */
         (new NodeResponse("bad stuff that's an error", {
-          status: 400
+          status: 400,
         }) as unknown) as Response
         /* eslint-enable @typescript-eslint/camelcase */
       );
@@ -128,11 +128,11 @@ describe("ClientRegistrar", () => {
       await expect(
         clientRegistrar.getClient(
           {
-            redirect: new URL("https://example.com")
+            redirect: new URL("https://example.com"),
           },
           {
             ...IssuerConfigFetcherFetchConfigResponse,
-            registrationEndpoint: registrationUrl
+            registrationEndpoint: registrationUrl,
           }
         )
       ).rejects.toThrowError(

@@ -34,7 +34,7 @@ describe("TokenSaver", () => {
   const defaultMocks = {
     sessionCreator: SessionCreatorMock,
     joseUtility: JoseUtilityMock,
-    storageUtility: StorageUtilityMock
+    storageUtility: StorageUtilityMock,
   };
   function getTokenSaver(
     mocks: Partial<typeof defaultMocks> = defaultMocks

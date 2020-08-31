@@ -32,15 +32,15 @@ export interface IEnvironmentDetector {
 /* istanbul ignore next */
 export default class EnvironmentDetector {
   detect(): environmentName {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof document != "undefined") {
       return "browser";
     } else if (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       typeof navigator != "undefined" &&
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       navigator.product == "ReactNative"
     ) {

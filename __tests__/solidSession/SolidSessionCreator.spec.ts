@@ -27,11 +27,11 @@
 import "reflect-metadata";
 import {
   UuidGeneratorMock,
-  UuidGeneratorMockResponse
+  UuidGeneratorMockResponse,
 } from "../../src/util/__mocks__/UuidGenerator";
 import {
   AuthenticatedFetcherMock,
-  AuthenticatedFetcherResponse
+  AuthenticatedFetcherResponse,
 } from "../../src/authenticatedFetch/__mocks__/AuthenticatedFetcher";
 import { LogoutHandlerMock } from "../../src/logout/__mocks__/LogoutHandler";
 import { StorageUtilityMock } from "../../src/localStorage/__mocks__/StorageUtility";
@@ -43,7 +43,7 @@ describe("SessionCreator", () => {
     uuidGenerator: UuidGeneratorMock,
     authenticatedFetcher: AuthenticatedFetcherMock,
     logoutHandler: LogoutHandlerMock,
-    storageUtility: StorageUtilityMock
+    storageUtility: StorageUtilityMock,
   };
   function getSessionCreator(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -62,21 +62,21 @@ describe("SessionCreator", () => {
       const sessionCreator = getSessionCreator();
       const session = sessionCreator.create({
         localUserId: "Commander Cool",
-        loggedIn: true
+        loggedIn: true,
       });
       expect(session).toMatchObject({
         localUserId: "Commander Cool",
-        loggedIn: true
+        loggedIn: true,
       });
     });
 
     it("creates a session without a given user", async () => {
       const sessionCreator = getSessionCreator();
       const session = sessionCreator.create({
-        loggedIn: false
+        loggedIn: false,
       });
       expect(session).toMatchObject({
-        localUserId: UuidGeneratorMockResponse
+        localUserId: UuidGeneratorMockResponse,
       });
     });
 
@@ -85,7 +85,7 @@ describe("SessionCreator", () => {
         const sessionCreator = getSessionCreator();
         const session = sessionCreator.create({
           localUserId: "Commander Cool",
-          loggedIn: true
+          loggedIn: true,
         }) as ILoggedInSolidSession;
         await session.logout();
         expect(defaultMocks.logoutHandler.handle).toHaveBeenCalledWith(
@@ -99,7 +99,7 @@ describe("SessionCreator", () => {
         const sessionCreator = getSessionCreator();
         const session = sessionCreator.create({
           localUserId: "Commander Cool",
-          loggedIn: true
+          loggedIn: true,
         }) as ILoggedInSolidSession;
         const response = await session.fetch("https://zoomies.com", {});
         expect(defaultMocks.authenticatedFetcher.handle).toHaveBeenCalledWith(
@@ -122,7 +122,7 @@ describe("SessionCreator", () => {
       const session = await sessionCreator.getSession("commanderCool");
       expect(session).toMatchObject({
         localUserId: "commanderCool",
-        webId: "https://zoomies.com/commanderCool#me"
+        webId: "https://zoomies.com/commanderCool#me",
       });
     });
 

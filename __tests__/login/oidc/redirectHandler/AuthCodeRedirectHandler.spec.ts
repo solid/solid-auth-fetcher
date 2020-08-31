@@ -33,7 +33,7 @@ describe("AuthCodeRedirectHandler", () => {
     storageUtility: StorageUtilityMock,
     redirector: RedirectorMock,
     tokenRequester: TokenRequesterMock,
-    sessionCreator: SessionCreatorMock
+    sessionCreator: SessionCreatorMock,
   };
   function getAuthCodeRedirectHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -96,14 +96,14 @@ describe("AuthCodeRedirectHandler", () => {
           code: "someCode",
           code_verifier: "a",
           grant_type: "authorization_code",
-          redirect_uri: "b"
+          redirect_uri: "b",
         }
         /* eslint-enable @typescript-eslint/camelcase */
       );
       expect(defaultMocks.redirector.redirect).toHaveBeenCalledWith(
         "https://coolsite.com/",
         {
-          redirectByReplacingState: true
+          redirectByReplacingState: true,
         }
       );
     });

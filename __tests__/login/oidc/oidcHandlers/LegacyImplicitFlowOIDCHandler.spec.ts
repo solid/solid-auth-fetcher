@@ -38,7 +38,7 @@ describe("LegacyImplicitFlowOidcHandler", () => {
   const defaultMocks = {
     fetcher: FetcherMock,
     dpopHeaderCreator: DpopHeaderCreatorMock,
-    sessionCreator: SessionCreatorMock
+    sessionCreator: SessionCreatorMock,
   };
   function getLegacyImplicitFlowOidcHandler(
     mocks: Partial<typeof defaultMocks> = defaultMocks
@@ -52,7 +52,7 @@ describe("LegacyImplicitFlowOidcHandler", () => {
 
   describe("canHandle", () => {
     const legacyImplicitFlowOidcHandler = getLegacyImplicitFlowOidcHandler();
-    canHandleTests["legacyImplicitFlowOidcHandler"].forEach(testConfig => {
+    canHandleTests["legacyImplicitFlowOidcHandler"].forEach((testConfig) => {
       it(testConfig.message, async () => {
         const value = await legacyImplicitFlowOidcHandler.canHandle(
           testConfig.oidcOptions
@@ -66,7 +66,7 @@ describe("LegacyImplicitFlowOidcHandler", () => {
     it("Creates the right session with dpop ", async () => {
       const legacyImplicitFlowOidcHandler = getLegacyImplicitFlowOidcHandler();
       const oidcOptions: IOidcOptions = {
-        ...standardOidcOptions
+        ...standardOidcOptions,
       };
       const session: ISolidSession = await legacyImplicitFlowOidcHandler.handle(
         oidcOptions
@@ -76,8 +76,8 @@ describe("LegacyImplicitFlowOidcHandler", () => {
         neededAction: {
           actionType: "redirect",
           redirectUrl:
-            "https://example.com/auth?response_type=id_token%20token&redirect_url=https%3A%2F%2Fapp.example.com&scope=openid%20id_vc&dpop=someToken"
-        }
+            "https://example.com/auth?response_type=id_token%20token&redirect_url=https%3A%2F%2Fapp.example.com&scope=openid%20id_vc&dpop=someToken",
+        },
       });
     });
 
@@ -85,7 +85,7 @@ describe("LegacyImplicitFlowOidcHandler", () => {
       const legacyImplicitFlowOidcHandler = getLegacyImplicitFlowOidcHandler();
       const oidcOptions: IOidcOptions = {
         ...standardOidcOptions,
-        dpop: false
+        dpop: false,
       };
       const session: ISolidSession = await legacyImplicitFlowOidcHandler.handle(
         oidcOptions
@@ -95,8 +95,8 @@ describe("LegacyImplicitFlowOidcHandler", () => {
         neededAction: {
           actionType: "redirect",
           redirectUrl:
-            "https://example.com/auth?response_type=id_token%20token&redirect_url=https%3A%2F%2Fapp.example.com&scope=openid%20id_vc"
-        }
+            "https://example.com/auth?response_type=id_token%20token&redirect_url=https%3A%2F%2Fapp.example.com&scope=openid%20id_vc",
+        },
       });
     });
   });
