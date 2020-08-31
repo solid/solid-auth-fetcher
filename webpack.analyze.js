@@ -21,14 +21,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
-const webpackMerge = require("webpack-merge");
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import { merge } from "webpack-merge";
 
-const productionConfig = require("./webpack.prod.js");
+import productionConfig from "./webpack.prod.js";
 
 module.exports = () => {
-  return webpackMerge(productionConfig, {
+  return merge(productionConfig, {
     plugins: [new BundleAnalyzerPlugin()]
   });
 };

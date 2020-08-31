@@ -21,7 +21,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const webpackMerge = require("webpack-merge");
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const { merge } = require("webpack-merge");
 
 const commonConfig = require("./webpack.common.js");
 
@@ -31,9 +33,9 @@ module.exports = ({ env, addon }) => {
   const browserConfig = {
     output: {
       libraryTarget: "var",
-      library: "solidAuthFetcher"
+      library: "solidAuthFetcher",
     }
   };
 
-  return webpackMerge(commonConfig, envConfig, browserConfig);
+  return merge(commonConfig, envConfig, browserConfig);
 };
