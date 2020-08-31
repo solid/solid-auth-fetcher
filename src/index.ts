@@ -39,7 +39,7 @@ export async function customAuthFetcher(
   options?: ICustomAuthFetcherOptions
 ): Promise<AuthFetcher> {
   const authFetcher = getAuthFetcherWithDependencies({
-    storage: options?.storage
+    storage: options?.storage,
   });
   if (!options?.doNotAutoHandleRedirect) {
     if (!redirectHandlerPromise) {

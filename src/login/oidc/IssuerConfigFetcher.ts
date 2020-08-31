@@ -47,27 +47,27 @@ const issuerConfigKeyMap: Record<
 > = {
   issuer: {
     toKey: "issuer",
-    convertToUrl: true
+    convertToUrl: true,
   },
   authorization_endpoint: {
     toKey: "authorizationEndpoint",
-    convertToUrl: true
+    convertToUrl: true,
   },
   token_endpoint: {
     toKey: "tokenEndpoint",
-    convertToUrl: true
+    convertToUrl: true,
   },
   userinfo_endpoint: {
     toKey: "userinfoEndpoint",
-    convertToUrl: true
+    convertToUrl: true,
   },
   jwks_uri: {
     toKey: "jwksUri",
-    convertToUrl: true
+    convertToUrl: true,
   },
   registration_endpoint: {
     toKey: "registrationEndpoint",
-    convertToUrl: true
+    convertToUrl: true,
   },
   scopes_supported: { toKey: "scopesSupported" },
   response_types_supported: { toKey: "responseTypesSupported" },
@@ -76,37 +76,37 @@ const issuerConfigKeyMap: Record<
   acr_values_supported: { toKey: "acrValuesSupported" },
   subject_types_supported: { toKey: "subjectTypesSupported" },
   id_token_signing_alg_values_supported: {
-    toKey: "idTokenSigningAlgValuesSupported"
+    toKey: "idTokenSigningAlgValuesSupported",
   },
   id_token_encryption_alg_values_supported: {
-    toKey: "idTokenEncryptionAlgValuesSupported"
+    toKey: "idTokenEncryptionAlgValuesSupported",
   },
   id_token_encryption_enc_values_supported: {
-    toKey: "idTokenEncryptionEncValuesSupported"
+    toKey: "idTokenEncryptionEncValuesSupported",
   },
   userinfo_signing_alg_values_supported: {
-    toKey: "userinfoSigningAlgValuesSupported"
+    toKey: "userinfoSigningAlgValuesSupported",
   },
   userinfo_encryption_alg_values_supported: {
-    toKey: "userinfoEncryptionAlgValuesSupported"
+    toKey: "userinfoEncryptionAlgValuesSupported",
   },
   userinfo_encryption_enc_values_supported: {
-    toKey: "userinfoEncryptionEncValuesSupported"
+    toKey: "userinfoEncryptionEncValuesSupported",
   },
   request_object_signing_alg_values_supported: {
-    toKey: "requestObjectSigningAlgValuesSupported"
+    toKey: "requestObjectSigningAlgValuesSupported",
   },
   request_object_encryption_alg_values_supported: {
-    toKey: "requestObjectEncryptionAlgValuesSupported"
+    toKey: "requestObjectEncryptionAlgValuesSupported",
   },
   request_object_encryption_enc_values_supported: {
-    toKey: "requestObjectEncryptionEncValuesSupported"
+    toKey: "requestObjectEncryptionEncValuesSupported",
   },
   token_endpoint_auth_methods_supported: {
-    toKey: "tokenEndpointAuthMethodsSupported"
+    toKey: "tokenEndpointAuthMethodsSupported",
   },
   token_endpoint_auth_signing_alg_values_supported: {
-    toKey: "tokenEndpointAuthSigningAlgValuesSupported"
+    toKey: "tokenEndpointAuthSigningAlgValuesSupported",
   },
   display_values_supported: { toKey: "displayValuesSupported" },
   claim_types_supported: { toKey: "claimTypesSupported" },
@@ -120,12 +120,12 @@ const issuerConfigKeyMap: Record<
   require_request_uri_registration: { toKey: "requireRequestUriRegistration" },
   op_policy_uri: {
     toKey: "opPolicyUri",
-    convertToUrl: true
+    convertToUrl: true,
   },
   op_tos_uri: {
     toKey: "opTosUri",
-    convertToUrl: true
-  }
+    convertToUrl: true,
+  },
 };
 /* eslint-enable @typescript-eslint/camelcase */
 
@@ -144,7 +144,7 @@ export default class IssuerConfigFetcher implements IIssuerConfigFetcher {
     config: Record<string, string | string[]>
   ): IIssuerConfig {
     const parsedConfig: Record<string, string | string[] | URL> = {};
-    Object.keys(config).forEach(key => {
+    Object.keys(config).forEach((key) => {
       if (issuerConfigKeyMap[key]) {
         parsedConfig[issuerConfigKeyMap[key].toKey] = issuerConfigKeyMap[key]
           .convertToUrl
@@ -159,7 +159,7 @@ export default class IssuerConfigFetcher implements IIssuerConfigFetcher {
     let issuerConfig: IIssuerConfig = (await this.storageUtility.safeGet(
       this.getLocalStorageKey(issuer),
       {
-        schema: issuerConfigSchema
+        schema: issuerConfigSchema,
       }
     )) as IIssuerConfig;
 

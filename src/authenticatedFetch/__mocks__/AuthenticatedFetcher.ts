@@ -41,5 +41,5 @@ export const AuthenticatedFetcherMock: jest.Mocked<IAuthenticatedFetcher> = {
       requestInfo: RequestInfo,
       requestInit: RequestInit
     ) => AuthenticatedFetcherResponse
-  )
+  ),
 };

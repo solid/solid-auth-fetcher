@@ -29,5 +29,5 @@ export const FetcherMockResponse: Response = (new NodeResponse(
 ) as unknown) as Response;
 
 export const FetcherMock: jest.Mocked<IFetcher> = {
-  fetch: jest.fn(async (_url, _init) => FetcherMockResponse)
+  fetch: jest.fn(async (_url, _init) => FetcherMockResponse),
 };

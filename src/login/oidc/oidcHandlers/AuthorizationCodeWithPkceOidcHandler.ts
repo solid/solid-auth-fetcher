@@ -60,7 +60,7 @@ export default class AuthorizationCodeWithPkceOidcHandler
     const codeVerifier = await this.joseUtility.generateCodeVerifier();
     const session = this.sessionCreator.create({
       localUserId: oidcLoginOptions.localUserId,
-      loggedIn: false
+      loggedIn: false,
     });
     // Disable camel case rule because this query requires camel case
     /* eslint-disable @typescript-eslint/camelcase */
@@ -73,7 +73,7 @@ export default class AuthorizationCodeWithPkceOidcHandler
       code_challenge: await this.joseUtility.generateCodeChallenge(
         codeVerifier
       ),
-      state: session.localUserId
+      state: session.localUserId,
     };
     /* eslint-enable @typescript-eslint/camelcase */
     requestUrl.set("query", query);
@@ -108,7 +108,7 @@ export default class AuthorizationCodeWithPkceOidcHandler
     }
 
     session.neededAction = this.redirector.redirect(requestUrl.toString(), {
-      doNotAutoRedirect: !!oidcLoginOptions.doNotAutoRedirect
+      doNotAutoRedirect: !!oidcLoginOptions.doNotAutoRedirect,
     });
 
     return session;

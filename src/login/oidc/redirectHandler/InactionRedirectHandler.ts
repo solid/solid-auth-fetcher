@@ -39,7 +39,7 @@ export default class InactionRedirectHandler implements IRedirectHandler {
   }
   async handle(redirectUrl: string): Promise<ISolidSession> {
     return this.sessionCreator.create({
-      loggedIn: false
+      loggedIn: false,
     });
   }
 }

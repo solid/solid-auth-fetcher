@@ -65,7 +65,7 @@ export const loginInputOptionsSchema = {
     state: { type: "string" },
     clientId: { type: "string" },
     doNotAutoRedirect: { type: "boolean" },
-    clientName: { type: "string" }
+    clientName: { type: "string" },
   },
-  oneOf: [{ required: ["oidcIssuer"] }, { required: ["webId"] }]
+  oneOf: [{ required: ["oidcIssuer"] }, { required: ["webId"] }],
 };

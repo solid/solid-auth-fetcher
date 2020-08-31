@@ -61,7 +61,7 @@ export default class AuthCodeRedirectHandler implements IRedirectHandler {
         localUserId,
         "redirectUri",
         true
-      )) as string
+      )) as string,
     ]);
 
     /* eslint-disable @typescript-eslint/camelcase */
@@ -69,7 +69,7 @@ export default class AuthCodeRedirectHandler implements IRedirectHandler {
       grant_type: "authorization_code",
       code_verifier: codeVerifier as string,
       code: url.query.code as string,
-      redirect_uri: redirectUri as string
+      redirect_uri: redirectUri as string,
     });
     /* eslint-enable @typescript-eslint/camelcase */
 
@@ -80,7 +80,7 @@ export default class AuthCodeRedirectHandler implements IRedirectHandler {
       throw new Error("There was a problem creating a session.");
     }
     session.neededAction = this.redirector.redirect(url.toString(), {
-      redirectByReplacingState: true
+      redirectByReplacingState: true,
     });
 
     return session;

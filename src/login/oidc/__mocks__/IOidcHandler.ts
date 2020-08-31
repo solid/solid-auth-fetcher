@@ -32,5 +32,5 @@ export const OidcHandlerMock: jest.Mocked<IOidcHandler> = {
   canHandle: jest.fn((_options: IOidcOptions) => Promise.resolve(true)),
   handle: jest.fn((_options: IOidcOptions) =>
     Promise.resolve(OidcHandlerHandleResponse)
-  )
+  ),
 };

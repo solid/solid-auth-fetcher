@@ -85,7 +85,7 @@ export default class OidcLoginHandler implements ILoginHandler {
       issuerConfiguration: issuerConfig,
       client: await this.clientRegistrar.getClient(options, issuerConfig),
       localUserId: options.localUserId,
-      doNotAutoRedirect: options.doNotAutoRedirect
+      doNotAutoRedirect: options.doNotAutoRedirect,
     };
 
     // Generate DPoP Key if needed

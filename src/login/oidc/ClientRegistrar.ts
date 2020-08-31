@@ -49,7 +49,7 @@ export default class ClientRegistrar implements IClientRegistrar {
       redirect_uris: [options.redirect?.toString()],
       subject_type: "pairwise",
       token_endpoint_auth_method: "client_secret_basic",
-      code_challenge_method: "S256"
+      code_challenge_method: "S256",
       /* eslint-enable @typescript-eslint/camelcase */
     };
     if (!issuerConfig.registrationEndpoint) {
@@ -62,9 +62,9 @@ export default class ClientRegistrar implements IClientRegistrar {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(config)
+        body: JSON.stringify(config),
       }
     );
     if (!response.ok) {
@@ -73,7 +73,7 @@ export default class ClientRegistrar implements IClientRegistrar {
     const responseBody = await response.json();
     return {
       clientId: responseBody.client_id,
-      clientSecret: responseBody.client_secret
+      clientSecret: responseBody.client_secret,
     };
   }
 
@@ -87,7 +87,7 @@ export default class ClientRegistrar implements IClientRegistrar {
     }
     // No need for dynamic registration
     return {
-      clientId: options.clientId
+      clientId: options.clientId,
     };
   }
 }

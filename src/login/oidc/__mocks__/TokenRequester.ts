@@ -26,5 +26,5 @@ import { ITokenRequester } from "../TokenRequester";
 export const TokenRequesterMock: jest.Mocked<ITokenRequester> = {
   request: jest.fn((localUserId: string, body: Record<string, string>) => {
     return Promise.resolve();
-  })
+  }),
 };

@@ -32,5 +32,5 @@ export const StorageMock: jest.Mocked<IStorage> = {
   }),
   delete: jest.fn(async (key: string) => {
     /* do nothing */
-  })
+  }),
 };

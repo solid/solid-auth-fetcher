@@ -29,5 +29,5 @@ export const RedirectHandlerResponse: ISolidSession = SessionCreatorCreateRespon
 
 export const RedirectHandlerMock: jest.Mocked<IRedirectHandler> = {
   canHandle: jest.fn((url: string) => Promise.resolve(true)),
-  handle: jest.fn((url: string) => Promise.resolve(RedirectHandlerResponse))
+  handle: jest.fn((url: string) => Promise.resolve(RedirectHandlerResponse)),
 };

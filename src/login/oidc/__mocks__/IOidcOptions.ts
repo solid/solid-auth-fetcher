@@ -35,9 +35,9 @@ export const standardOidcOptions: IOidcOptions = {
     tokenEndpoint: new URL("https://example.com/token"),
     jwksUri: new URL("https://example.com/jwks"),
     subjectTypesSupported: [],
-    claimsSupported: []
+    claimsSupported: [],
   },
   client: {
-    clientId: "coolApp"
-  }
+    clientId: "coolApp",
+  },
 };

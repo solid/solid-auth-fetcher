@@ -61,7 +61,7 @@ export default class LegacyImplicitFlowOidcHandler implements IOidcHandler {
     const query: { [key: string]: string } = {
       response_type: "id_token token",
       redirect_url: oidcLoginOptions.redirectUrl.toString(),
-      scope: "openid id_vc"
+      scope: "openid id_vc",
     };
     /* eslint-enable @typescript-eslint/camelcase */
     if (oidcLoginOptions.dpop) {
@@ -75,9 +75,9 @@ export default class LegacyImplicitFlowOidcHandler implements IOidcHandler {
     return this.sessionCreator.create({
       neededAction: {
         actionType: "redirect",
-        redirectUrl: requestUrl.toString()
+        redirectUrl: requestUrl.toString(),
       } as INeededRedirectAction,
-      loggedIn: false
+      loggedIn: false,
     });
   }
 }

@@ -48,14 +48,14 @@ import LegacyImplicitFlowOidcHandler from "./login/oidc/oidcHandlers/LegacyImpli
 import RefreshTokenOidcHandler from "./login/oidc/oidcHandlers/RefreshTokenOidcHandler";
 import Fetcher, { IFetcher } from "./util/Fetcher";
 import IssuerConfigFetcher, {
-  IIssuerConfigFetcher
+  IIssuerConfigFetcher,
 } from "./login/oidc/IssuerConfigFetcher";
 import BearerAuthenticatedFetcher from "./authenticatedFetch/bearer/BearerAuthenticatedFetcher";
 import DpopHeaderCreator, {
-  IDpopHeaderCreator
+  IDpopHeaderCreator,
 } from "./dpop/DpopHeaderCreator";
 import DpopClientKeyManager, {
-  IDpopClientKeyManager
+  IDpopClientKeyManager,
 } from "./dpop/DpopClientKeyManager";
 import StorageUtility, { IStorageUtility } from "./localStorage/StorageUtility";
 import UuidGenerator, { IUuidGenerator } from "./util/UuidGenerator";
@@ -63,164 +63,164 @@ import NodeStorage from "./localStorage/NodeStorage";
 import IRedirectHandler from "./login/oidc/redirectHandler/IRedirectHandler";
 import GeneralRedirectHandler from "./login/oidc/redirectHandler/GeneralRedirectHandler";
 import EnvironmentDetector, {
-  IEnvironmentDetector
+  IEnvironmentDetector,
 } from "./util/EnvironmentDetector";
 import ILogoutHandler from "./logout/ILogoutHandler";
 import GeneralLogoutHandler from "./logout/GeneralLogoutHandler";
 import UrlRepresenationConverter, {
-  IUrlRepresentationConverter
+  IUrlRepresentationConverter,
 } from "./util/UrlRepresenationConverter";
 import SessionCreator, { ISessionCreator } from "./solidSession/SessionCreator";
 import AuthCodeRedirectHandler from "./login/oidc/redirectHandler/AuthCodeRedirectHandler";
 import AggregateRedirectHandler from "./login/oidc/redirectHandler/AggregateRedirectHandler";
 import BrowserStorage from "./localStorage/BrowserStorage";
 import TokenSaver, {
-  ITokenSaver
+  ITokenSaver,
 } from "./login/oidc/redirectHandler/TokenSaver";
 import Redirector, { IRedirector } from "./login/oidc/Redirector";
 import InactionRedirectHandler from "./login/oidc/redirectHandler/InactionRedirectHandler";
 import PopUpLoginHandler from "./login/popUp/PopUpLoginHandler";
 import AggregatePostPopUpLoginHandler from "./login/popUp/AggregatePostPopUpLoginHandler";
 import ClientRegistrar, {
-  IClientRegistrar
+  IClientRegistrar,
 } from "./login/oidc/ClientRegistrar";
 import TokenRefresher, {
-  ITokenRefresher
+  ITokenRefresher,
 } from "./login/oidc/refresh/TokenRefresher";
 import AutomaticRefreshFetcher from "./authenticatedFetch/AutomaticRefreshFetcher";
 import TokenRequester, { ITokenRequester } from "./login/oidc/TokenRequester";
 
 // Util
 container.register<IFetcher>("fetcher", {
-  useClass: Fetcher
+  useClass: Fetcher,
 });
 container.register<IDpopHeaderCreator>("dpopHeaderCreator", {
-  useClass: DpopHeaderCreator
+  useClass: DpopHeaderCreator,
 });
 container.register<IDpopClientKeyManager>("dpopClientKeyManager", {
-  useClass: DpopClientKeyManager
+  useClass: DpopClientKeyManager,
 });
 container.register<IStorageUtility>("storageUtility", {
-  useClass: StorageUtility
+  useClass: StorageUtility,
 });
 container.register<IUuidGenerator>("uuidGenerator", {
-  useClass: UuidGenerator
+  useClass: UuidGenerator,
 });
 container.register<IJoseUtility>("joseUtility", {
-  useClass: IsomorphicJoseUtility
+  useClass: IsomorphicJoseUtility,
 });
 container.register<IEnvironmentDetector>("environmentDetector", {
-  useClass: EnvironmentDetector
+  useClass: EnvironmentDetector,
 });
 container.register<IUrlRepresentationConverter>("urlRepresentationConverter", {
-  useClass: UrlRepresenationConverter
+  useClass: UrlRepresenationConverter,
 });
 
 // Session
 container.register<ISessionCreator>("sessionCreator", {
-  useClass: SessionCreator
+  useClass: SessionCreator,
 });
 
 // Authenticated Fetcher
 container.register<IAuthenticatedFetcher>("authenticatedFetcher", {
-  useClass: AutomaticRefreshFetcher
+  useClass: AutomaticRefreshFetcher,
 });
 container.register<IAuthenticatedFetcher>("aggregateAuthenticatedFetcher", {
-  useClass: AggregateAuthenticatedFetcher
+  useClass: AggregateAuthenticatedFetcher,
 });
 container.register<IAuthenticatedFetcher>("authenticatedFetchers", {
-  useClass: DpopAuthenticatedFetcher
+  useClass: DpopAuthenticatedFetcher,
 });
 container.register<IAuthenticatedFetcher>("authenticatedFetchers", {
-  useClass: BearerAuthenticatedFetcher
+  useClass: BearerAuthenticatedFetcher,
 });
 container.register<IAuthenticatedFetcher>("authenticatedFetchers", {
-  useClass: UnauthenticatedFetcher
+  useClass: UnauthenticatedFetcher,
 });
 
 // Login
 container.register<ILoginHandler>("loginHandler", {
-  useClass: AggregateLoginHandler
+  useClass: AggregateLoginHandler,
 });
 container.register<ILoginHandler>("loginHandlers", {
-  useClass: PopUpLoginHandler
+  useClass: PopUpLoginHandler,
 });
 container.register<ILoginHandler>("loginHandlers", {
-  useClass: OidcLoginHandler
+  useClass: OidcLoginHandler,
 });
 
 container.register<ILoginHandler>("postPopUpLoginHandler", {
-  useClass: AggregatePostPopUpLoginHandler
+  useClass: AggregatePostPopUpLoginHandler,
 });
 container.register<ILoginHandler>("postPopUpLoginHandlers", {
-  useClass: OidcLoginHandler
+  useClass: OidcLoginHandler,
 });
 
 // Login/OIDC
 container.register<IOidcHandler>("oidcHandler", {
-  useClass: AggregateOidcHandler
+  useClass: AggregateOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: RefreshTokenOidcHandler
+  useClass: RefreshTokenOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: AuthorizationCodeOidcHandler
+  useClass: AuthorizationCodeOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: AuthorizationCodeWithPkceOidcHandler
+  useClass: AuthorizationCodeWithPkceOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: ClientCredentialsOidcHandler
+  useClass: ClientCredentialsOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: PrimaryDeviceOidcHandler
+  useClass: PrimaryDeviceOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: SecondaryDeviceOidcHandler
+  useClass: SecondaryDeviceOidcHandler,
 });
 container.register<IOidcHandler>("oidcHandlers", {
-  useClass: LegacyImplicitFlowOidcHandler
+  useClass: LegacyImplicitFlowOidcHandler,
 });
 container.register<IRedirector>("redirector", {
-  useClass: Redirector
+  useClass: Redirector,
 });
 container.register<IClientRegistrar>("clientRegistrar", {
-  useClass: ClientRegistrar
+  useClass: ClientRegistrar,
 });
 container.register<ITokenRequester>("tokenRequester", {
-  useClass: TokenRequester
+  useClass: TokenRequester,
 });
 
 // Login/OIDC/redirectHandler
 container.register<IRedirectHandler>("redirectHandler", {
-  useClass: AggregateRedirectHandler
+  useClass: AggregateRedirectHandler,
 });
 container.register<IRedirectHandler>("redirectHandlers", {
-  useClass: AuthCodeRedirectHandler
+  useClass: AuthCodeRedirectHandler,
 });
 container.register<IRedirectHandler>("redirectHandlers", {
-  useClass: GeneralRedirectHandler
+  useClass: GeneralRedirectHandler,
 });
 container.register<IRedirectHandler>("redirectHandlers", {
-  useClass: InactionRedirectHandler
+  useClass: InactionRedirectHandler,
 });
 container.register<ITokenSaver>("tokenSaver", {
-  useClass: TokenSaver
+  useClass: TokenSaver,
 });
 
 // Login/OIDC/Issuer
 container.register<IIssuerConfigFetcher>("issuerConfigFetcher", {
-  useClass: IssuerConfigFetcher
+  useClass: IssuerConfigFetcher,
 });
 
 // Login/OIDC/Refresh
 container.register<ITokenRefresher>("tokenRefresher", {
-  useClass: TokenRefresher
+  useClass: TokenRefresher,
 });
 
 // Logout
 container.register<ILogoutHandler>("logoutHandler", {
-  useClass: GeneralLogoutHandler
+  useClass: GeneralLogoutHandler,
 });
 
 export default function getAuthFetcherWithDependencies(dependencies: {
@@ -238,7 +238,7 @@ export default function getAuthFetcherWithDependencies(dependencies: {
   }
   const authenticatorContainer = container.createChildContainer();
   authenticatorContainer.register<IStorage>("storage", {
-    useValue: storage
+    useValue: storage,
   });
   return authenticatorContainer.resolve(AuthFetcher);
 }

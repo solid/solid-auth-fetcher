@@ -81,7 +81,7 @@ export default class DpopAuthenticatedFetcher implements IAuthenticatedFetcher {
     const requestInitiWithDefaults = {
       headers: {},
       method: "GET",
-      ...requestInit
+      ...requestInit,
     };
     return this.fetcher.fetch(url, {
       ...requestInit,
@@ -91,8 +91,8 @@ export default class DpopAuthenticatedFetcher implements IAuthenticatedFetcher {
         dpop: await this.dpopHeaderCreator.createHeaderToken(
           this.urlRepresentationConverter.requestInfoToUrl(url),
           requestInitiWithDefaults.method
-        )
-      }
+        ),
+      },
     });
   }
 }

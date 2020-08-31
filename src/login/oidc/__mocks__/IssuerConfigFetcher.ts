@@ -31,11 +31,11 @@ export const IssuerConfigFetcherFetchConfigResponse: IIssuerConfig = {
   tokenEndpoint: new URL("https://idp.com/token"),
   jwksUri: new URL("https://idp.com/jwks"),
   subjectTypesSupported: [],
-  claimsSupported: []
+  claimsSupported: [],
 };
 
 export const IssuerConfigFetcherMock: jest.Mocked<IIssuerConfigFetcher> = {
   fetchConfig: jest.fn((_issuer: URL) =>
     Promise.resolve(IssuerConfigFetcherFetchConfigResponse)
-  )
+  ),
 };

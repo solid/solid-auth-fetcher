@@ -70,18 +70,18 @@ export default class SessionCreator implements ISessionCreator {
           return this.authenticatedFetcher.handle(
             {
               localUserId,
-              type: "dpop"
+              type: "dpop",
             },
             url,
             init
           );
-        }
+        },
       };
     } else {
       return {
         localUserId,
         loggedIn: false,
-        neededAction: options.neededAction || { actionType: "inaction" }
+        neededAction: options.neededAction || { actionType: "inaction" },
       };
     }
   }
@@ -96,7 +96,7 @@ export default class SessionCreator implements ISessionCreator {
       return this.create({
         localUserId,
         webId: webId,
-        loggedIn: !!accessToken
+        loggedIn: !!accessToken,
       });
     }
     return null;

@@ -57,12 +57,12 @@ export default class Redirector implements IRedirector {
         window.location.href = redirectUrl;
       }
       return {
-        actionType: "inaction"
+        actionType: "inaction",
       } as INeededInactionAction;
     } else {
       return {
         actionType: "redirect",
-        redirectUrl
+        redirectUrl,
       } as INeededRedirectAction;
     }
   }

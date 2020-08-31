@@ -31,13 +31,13 @@ export const LoginHandlerResponse: ILoggedOutSolidSession = {
   localUserId: "global",
   neededAction: {
     actionType: "redirect",
-    redirectUrl: "http://coolSite.com/redirect"
-  } as INeededRedirectAction
+    redirectUrl: "http://coolSite.com/redirect",
+  } as INeededRedirectAction,
 };
 
 export const LoginHandlerMock: jest.Mocked<ILoginHandler> = {
   canHandle: jest.fn((options: ILoginOptions) => Promise.resolve(true)),
   handle: jest.fn((options: ILoginOptions) =>
     Promise.resolve(LoginHandlerResponse)
-  )
+  ),
 };

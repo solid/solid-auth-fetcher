@@ -67,7 +67,7 @@ export default class DpopClientKeyManager implements IDpopClientKeyManager {
       // TODO: differentiate between what a server supports instead of hard coding rsa?
       jwk = await this.joseUtility.generateJWK("RSA", 2048, {
         alg: "RSA",
-        use: "sig"
+        use: "sig",
       });
       await this.storageUtility.set(
         this.getLocalStorageKey(),
@@ -78,7 +78,7 @@ export default class DpopClientKeyManager implements IDpopClientKeyManager {
 
   async getClientKey(): Promise<JSONWebKey | null> {
     return (await this.storageUtility.safeGet(this.getLocalStorageKey(), {
-      schema: jwkSchema
+      schema: jwkSchema,
     })) as JSONWebKey;
   }
 }

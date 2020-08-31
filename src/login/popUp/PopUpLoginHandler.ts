@@ -56,7 +56,7 @@ export default class PopUpLoginHandler implements ILoginHandler {
     const session = await this.loginHandler.handle({
       ...loginOptions,
       redirect: currentUrl,
-      doNotAutoRedirect: true
+      doNotAutoRedirect: true,
     });
     // TODO: handle if session doesn't have redirect
     const popupWindow = window.open(

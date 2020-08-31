@@ -30,5 +30,5 @@ export const TokenSaverMock: jest.Mocked<ITokenSaver> = {
   saveTokenAndGetSession: jest.fn(
     (localUserId: string, idToken: string, accessToken?: string) =>
       Promise.resolve(TokenSaverSaveTokenAndGetSessionResponse)
-  )
+  ),
 };

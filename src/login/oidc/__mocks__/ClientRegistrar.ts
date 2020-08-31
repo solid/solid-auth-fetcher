@@ -28,11 +28,11 @@ import IIssuerConfig from "../IIssuerConfig";
 
 export const ClientRegistrarResponse: IClient = {
   clientId: "abcde",
-  clientSecret: "12345"
+  clientSecret: "12345",
 };
 
 export const ClientRegistrarMock: jest.Mocked<IClientRegistrar> = {
   getClient: jest.fn((options: ILoginOptions, issuerConfig: IIssuerConfig) =>
     Promise.resolve(ClientRegistrarResponse)
-  )
+  ),
 };

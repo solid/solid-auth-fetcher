@@ -72,7 +72,7 @@ export default class DpopAuthenticatedFetcher implements IAuthenticatedFetcher {
     return this.fetcher.fetch(url, {
       ...requestInit,
       method: requestInit?.method ?? "GET",
-      headers: flattenHeaders(requestInit?.headers)
+      headers: flattenHeaders(requestInit?.headers),
     });
   }
 }

@@ -33,7 +33,7 @@ export const SessionCreatorCreateResponse: ILoggedInSolidSession = {
     /* do nothing */
   },
   fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> =>
-    new Response()
+    new Response(),
 };
 export const SessionCreatorGetSessionResponse: ISolidSession = SessionCreatorCreateResponse;
 
@@ -43,5 +43,5 @@ export const SessionCreatorMock: jest.Mocked<ISessionCreator> = {
   ),
   getSession: jest.fn(
     async (localUserId: string) => SessionCreatorGetSessionResponse
-  )
+  ),
 };

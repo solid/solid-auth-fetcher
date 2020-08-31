@@ -43,7 +43,7 @@ export default class BearerAuthenticatedFetcher
     url: RequestInfo,
     requestInit?: RequestInit
   ): Promise<Response> {
-    "";
+    ("");
     throw new NotImplementedError("BearerAuthenticatedFetcher");
   }
 }

@@ -23,7 +23,7 @@
 
 import ISolidSession from "./solidSession/ISolidSession";
 import ILoginInputOptions, {
-  loginInputOptionsSchema
+  loginInputOptionsSchema,
 } from "./ILoginInputOptions";
 import { injectable, inject } from "tsyringe";
 import ILoginHandler from "./login/ILoginHandler";
@@ -76,7 +76,7 @@ export default class AuthFetcher extends EventEmitter {
       // TODO: generate request credentials separately
       {
         localUserId: this.globalUserName,
-        type: "dpop"
+        type: "dpop",
       },
       url,
       init

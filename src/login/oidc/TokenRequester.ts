@@ -52,7 +52,7 @@ export default class TokenRequester {
     const [issuer, clientId, clientSecret] = await Promise.all([
       this.storageUtility.getForUser(localUserId, "issuer", true),
       this.storageUtility.getForUser(localUserId, "clientId", true),
-      this.storageUtility.getForUser(localUserId, "clientSecret")
+      this.storageUtility.getForUser(localUserId, "clientSecret"),
     ]);
 
     // Get the issuer config to find the token url
@@ -84,13 +84,13 @@ export default class TokenRequester {
           issuerConfig.tokenEndpoint,
           "POST"
         ),
-        "content-type": "application/x-www-form-urlencoded"
+        "content-type": "application/x-www-form-urlencoded",
       },
       body: formurlencoded({
         ...body,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        client_id: clientId
-      })
+        client_id: clientId,
+      }),
     };
 
     if (clientSecret) {
