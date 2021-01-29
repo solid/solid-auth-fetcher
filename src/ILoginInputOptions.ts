@@ -37,11 +37,11 @@ export interface ICoreLoginInuptOptions {
   clientName?: string;
 }
 
-export interface IIssuerLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IWebIdLoginInputOptions extends ICoreLoginInuptOptions {
   webId: string;
 }
 
-export interface IWebIdLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IIssuerLoginInputOptions extends ICoreLoginInuptOptions {
   oidcIssuer: string;
 }
 
