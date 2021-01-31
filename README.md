@@ -130,7 +130,7 @@ getSession().then(async (session) => {
       popUp: false,
       
       // The page that that should be queried once login is complete
-      redirectUrl: 'https://mysite.com/redirect',
+      redirect: 'https://mysite.com/redirect',
     })
     // Chances are that this session will not be logged in. Instead, your browser
     // window will be redirected and you'll be able to get the logged in session
@@ -223,7 +223,7 @@ getSessions().then((sessions) => {
   if (sessions.some((session) => session.webId === myWebId)) {
     await uniqueLogin({
       webId: myWebId,
-      redirectUrl: "https://myapp.com/redirect"
+      redirect: "https://myapp.com/redirect"
     })
   }
 })
@@ -279,7 +279,7 @@ getCustomAuthFetcher({
       // Log in if the user is not already
       const session = await authFetcher.login({
         oidcIssuer: 'https://identityProvider.com', 
-        redirectUrl: 'https://mysite.com/redirect',
+        redirect: 'https://mysite.com/redirect',
         // Notice this flag the suppresses the auto redirect
         doNotAutoRedirect: true
       });
