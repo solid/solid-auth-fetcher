@@ -82,7 +82,7 @@
     "crypto-random-string": "^3.3.0",
     "debug": "^4.3.1",
     "eslint-plugin-license-header": "^0.2.0",
-    "form-urlencoded": "^4.1.4",
+    "form-urlencoded": "^6.0.4",
     "husky": "^4.2.3",
     "jose": "^1.27.2",
     "jsonwebtoken": "^8.5.1",
