@@ -31,8 +31,10 @@ export async function getAuthFetcher(
   appOrigin: string,
   allowUnauthenticated = true
 ): Promise<AuthFetcher | { fetch: any }> {
-  if (!oidcProviderCookie.length && allowUnauthenticated) {
-    return { fetch } as { fetch: any };
+  if (!oidcProviderCookie || !oidcProviderCookie.length) {
+    if (allowUnauthenticated) {
+      return { fetch } as { fetch: any };
+    }
   }
   const authFetcher = await customAuthFetcher();
 
@@ -64,18 +66,39 @@ export async function getNodeSolidServerCookie(
   password: string
 ): Promise<string | null> {
   const authFetcher = await customAuthFetcher();
-  const serverLoginResult = await authFetcher.fetch(
-    `${serverRoot}/login/password`,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `username=${username}&password=${password}`,
-      method: "POST",
-      redirect: "manual"
-    }
-  );
-  return serverLoginResult.headers.get("set-cookie");
+  let serverLoginResult;
+  try {
+    serverLoginResult = await authFetcher.fetch(
+      `${serverRoot}/login/password`,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `username=${username}&password=${password}`,
+        method: "POST",
+        redirect: "manual"
+      }
+    );
+  }
+  catch(e){
+    if(e.toString().match('ENOTFOUND')) e = "Server not found!"
+    console.warn(`Could not connect to <${serverRoot}> : ${e}`);
+    return null
+  }
+  let status = serverLoginResult.status
+  let cookie = serverLoginResult.headers.get("set-cookie");
+  if(status==400 && !cookie){
+    console.warn(`Could not login to <${serverRoot}> as <${username}>`);
+    return null
+  }
+  if( !(serverLoginResult.status==302) ){
+    let statusText = serverLoginResult.statusText
+    console.warn(
+      `Could not connect to <${serverRoot}> : ${status+" "+statusText}`
+    );
+    return null
+  }
+  return cookie;
 }
 
 export async function getPhpSolidServerCookie(
