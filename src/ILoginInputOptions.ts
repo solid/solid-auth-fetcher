@@ -30,26 +30,26 @@ type ILoginInputOptions =
   | (IWebIdLoginInputOptions & IPopupLoginInputOptions);
 export default ILoginInputOptions;
 
-export interface ICoreLoginInuptOptions {
+export interface ICoreLoginInputOptions {
   state?: string;
   clientId?: string;
   doNotAutoRedirect?: boolean;
   clientName?: string;
 }
 
-export interface IIssuerLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IWebIdLoginInputOptions extends ICoreLoginInputOptions {
   webId: string;
 }
 
-export interface IWebIdLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IIssuerLoginInputOptions extends ICoreLoginInputOptions {
   oidcIssuer: string;
 }
 
-export interface IRedirectLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IRedirectLoginInputOptions extends ICoreLoginInputOptions {
   redirect: string;
 }
 
-export interface IPopupLoginInputOptions extends ICoreLoginInuptOptions {
+export interface IPopupLoginInputOptions extends ICoreLoginInputOptions {
   popUp: boolean;
   popUpRedirectPath: string;
 }
