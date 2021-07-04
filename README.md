@@ -142,7 +142,9 @@ getSession().then(async (session) => {
 
 #### Login with a PopUp Window
 
-By default, the user is redirected to the login page within the same window, but you might want to maintain the state of your application without it being interrupted by a redirect. To do so, you can use a popup. If you do want to use a popup, you should provide a `popUpRedirectPath` for the popup window to redirect to. At this path you should run the `handlePopUpRedirect` function
+By default, the user is redirected to the login page within the same window, but you might want to maintain the state of your application without it being interrupted by a redirect. To do so, you can use a popup. 
+
+The issuer's login page is opened in a popup, which then redirects the user to `popUpRedirectPath`. Running `handleRedirect` at this path stores the `accessToken` and `webId` in localStorage. The main window waits for the popup to close before creating the session from the stored credentials.
 
 `index.html`:
 ```html
@@ -172,7 +174,7 @@ By default, the user is redirected to the login page within the same window, but
 <head>
 <script src="/path/to/solidAuthFetcher.bundle.js"></script>
 <script>
-  solidAuthFetcher.handlePopUpRedirect()
+  solidAuthFetcher.handleRedirect().then(()=>window.close());
 </script>
 <head>
 </html>
